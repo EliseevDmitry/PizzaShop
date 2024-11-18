@@ -9,19 +9,23 @@
 /* Begin PBXBuildFile section */
 		2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE1E2CEA6C2400E06092 /* AppDelegate.swift */; };
 		2607BE212CEA6C2400E06092 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE202CEA6C2400E06092 /* SceneDelegate.swift */; };
-		2607BE232CEA6C2400E06092 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE222CEA6C2400E06092 /* ViewController.swift */; };
-		2607BE282CEA6C2500E06092 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
-		2607BE2B2CEA6C2500E06092 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2607BE2A2CEA6C2500E06092 /* Base */; };
+		2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */; };
+		263D2B082CEB025100F7E540 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2B072CEB025100F7E540 /* ProductCell.swift */; };
+		26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CD2CEB1FA7004EDC37 /* Product.swift */; };
+		26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2607BE1B2CEA6C2400E06092 /* PizzaShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PizzaShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2607BE1E2CEA6C2400E06092 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2607BE202CEA6C2400E06092 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2607BE222CEA6C2400E06092 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenVC.swift; sourceTree = "<group>"; };
 		2607BE272CEA6C2500E06092 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2607BE2A2CEA6C2500E06092 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2607BE2C2CEA6C2500E06092 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		263D2B072CEB025100F7E540 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		26F000CA2CEB1ADD004EDC37 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26F000CD2CEB1FA7004EDC37 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsServices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +44,7 @@
 			children = (
 				2607BE1D2CEA6C2400E06092 /* PizzaShop */,
 				2607BE1C2CEA6C2400E06092 /* Products */,
+				263D2B0A2CEB174200F7E540 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +59,80 @@
 		2607BE1D2CEA6C2400E06092 /* PizzaShop */ = {
 			isa = PBXGroup;
 			children = (
-				2607BE1E2CEA6C2400E06092 /* AppDelegate.swift */,
-				2607BE202CEA6C2400E06092 /* SceneDelegate.swift */,
-				2607BE222CEA6C2400E06092 /* ViewController.swift */,
-				2607BE272CEA6C2500E06092 /* Assets.xcassets */,
-				2607BE292CEA6C2500E06092 /* LaunchScreen.storyboard */,
-				2607BE2C2CEA6C2500E06092 /* Info.plist */,
+				263D2B022CEB012200F7E540 /* App */,
+				263D2B032CEB014D00F7E540 /* Screens */,
+				26F000CB2CEB1F50004EDC37 /* Models */,
+				26F000CC2CEB1F81004EDC37 /* Services */,
+				263D2B052CEB019400F7E540 /* Resources */,
 			);
 			path = PizzaShop;
+			sourceTree = "<group>";
+		};
+		263D2B022CEB012200F7E540 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2607BE1E2CEA6C2400E06092 /* AppDelegate.swift */,
+				2607BE202CEA6C2400E06092 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		263D2B032CEB014D00F7E540 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				263D2B042CEB018100F7E540 /* Menu */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		263D2B042CEB018100F7E540 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */,
+				263D2B062CEB022200F7E540 /* Cells */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		263D2B052CEB019400F7E540 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2607BE272CEA6C2500E06092 /* Assets.xcassets */,
+				26F000CA2CEB1ADD004EDC37 /* Info.plist */,
+				2607BE292CEA6C2500E06092 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		263D2B062CEB022200F7E540 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				263D2B072CEB025100F7E540 /* ProductCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		263D2B0A2CEB174200F7E540 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		26F000CB2CEB1F50004EDC37 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				26F000CD2CEB1FA7004EDC37 /* Product.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		26F000CC2CEB1F81004EDC37 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -73,7 +144,6 @@
 			buildPhases = (
 				2607BE172CEA6C2400E06092 /* Sources */,
 				2607BE182CEA6C2400E06092 /* Frameworks */,
-				2607BE192CEA6C2400E06092 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -117,24 +187,15 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		2607BE192CEA6C2400E06092 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2607BE282CEA6C2500E06092 /* Assets.xcassets in Resources */,
-				2607BE2B2CEA6C2500E06092 /* Base in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		2607BE172CEA6C2400E06092 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2607BE232CEA6C2400E06092 /* ViewController.swift in Sources */,
+				2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */,
+				263D2B082CEB025100F7E540 /* ProductCell.swift in Sources */,
+				26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */,
+				26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */,
 				2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */,
 				2607BE212CEA6C2400E06092 /* SceneDelegate.swift in Sources */,
 			);
@@ -282,7 +343,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LT54Q8Z33F;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PizzaShop/Info.plist;
+				INFOPLIST_FILE = PizzaShop/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -314,7 +375,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LT54Q8Z33F;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PizzaShop/Info.plist;
+				INFOPLIST_FILE = PizzaShop/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
