@@ -10,34 +10,45 @@ import UIKit
 //закрываем класс от наследования
 final class MenuScreenVC: UIViewController {
     
-   fileprivate var products = ["Гавайская", "Маргарита", "Буженина", "4 Сыра", "Пеперрони"]
+    let productService = ProductsService()
+    //это заставляет обновлять таблицу при каждом обновлении перевменной products?
+    var products: [Product] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     //всегда был вопрос по набору параметров которые мы устанавливаем при инициализации во время создания таблицы
-    //private lazy - 
+    //private lazy - не сразу появилось, не совсем понимаю ее логику в ключе клоужура (тем более без нее - не работает)
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-
         //не думал что их можно прописать тут (всегдла прописывал в viewDidLoad())
-        tableView.dataSource = self //таблица делегирует свои методы по заполнению таблицы (datasource)
-        tableView.delegate = self //методы поведения (delegate) на выполение контроллеру
-        
+        $0.dataSource = self //таблица делегирует свои методы по заполнению таблицы (datasource)
+        $0.delegate = self //методы поведения (delegate) на выполение контроллеру
         //Чтобы ячейка взлетела нужно зарегистрировать ячейку в таблице
-        tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseId)
-        
+        //что дает сокращенная форма записи:
+        //tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseId)
+        $0.registerCell(ProductCell.self) // - просто для понимания - что это дает?
         //если мы НЕ используем SnapKit требуется translatesAutoresizingMaskIntoConstraints установить false!!
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .orange
-        return tableView
-    }()
-
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .orange
+        $0.rowHeight = UIScreen.main.bounds.width * 0.4
+        $0.separatorStyle = .none
+        $0.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
+        return $0
+    }(UITableView())
+    
     //точка входа в контроллер
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
         setupViews()
         setupConstraints()
+        fetchProducts()
     }
-
+    
+    private func fetchProducts() {
+        products = productService.fetchProducts()
+    }
 }
 
 //Выносим в отдельный extension методы расстановки view и констрэйнтов
@@ -46,18 +57,16 @@ extension MenuScreenVC {
     private func setupViews() {
         view.addSubview(tableView)
     }
-
+    
     //установка констрэйнтов
     private func setupConstraints(){
         let safeArea = view.safeAreaLayoutGuide
-        //как избасляться оптимально от magicNumbers такие как 0 и прочее?
         tableView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0).isActive = true
         tableView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: .zero).isActive = true
         tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: .zero).isActive = true
         tableView.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: .zero).isActive = true
     }
 }
-
 
 extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,11 +77,15 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //создать ячейку в методе датасорса tableView: cellForRowAt:
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseId, for: indexPath) as! ProductCell //работает без кастинга as! ProductCell
         
+        //использовал let cell без guard, также пока непонятна форма записи с дженериком
+        //let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseId, for: indexPath) as! ProductCell //работает без кастинга as! ProductCell
+        
+        let cell = tableView.dequeuCell(indexPath) as ProductCell
         let product = products[indexPath.row]
-        cell.update(productName: product)
-       // return UITableViewCell() // инициализируем пустую ячейку
+        cell.update(product)
+        // return UITableViewCell() // инициализируем пустую ячейку
         return cell
     }
+    
 }

@@ -10,9 +10,13 @@
 		2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE1E2CEA6C2400E06092 /* AppDelegate.swift */; };
 		2607BE212CEA6C2400E06092 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE202CEA6C2400E06092 /* SceneDelegate.swift */; };
 		2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */; };
+		26244C2D2CEB9CCF00F3FBB8 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26244C2C2CEB9CCF00F3FBB8 /* Extension.swift */; };
 		263D2B082CEB025100F7E540 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2B072CEB025100F7E540 /* ProductCell.swift */; };
 		26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CD2CEB1FA7004EDC37 /* Product.swift */; };
 		26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */; };
+		26F000D22CEB663C004EDC37 /* Info.plist in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F000CA2CEB1ADD004EDC37 /* Info.plist */; };
+		26F000D32CEB6641004EDC37 /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
+		26F000D72CEB6831004EDC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,7 @@
 		2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenVC.swift; sourceTree = "<group>"; };
 		2607BE272CEA6C2500E06092 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2607BE2A2CEA6C2500E06092 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		26244C2C2CEB9CCF00F3FBB8 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		263D2B072CEB025100F7E540 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		26F000CA2CEB1ADD004EDC37 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26F000CD2CEB1FA7004EDC37 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -33,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F000D22CEB663C004EDC37 /* Info.plist in Frameworks */,
+				26F000D32CEB6641004EDC37 /* Assets.xcassets in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,9 +70,18 @@
 				263D2B032CEB014D00F7E540 /* Screens */,
 				26F000CB2CEB1F50004EDC37 /* Models */,
 				26F000CC2CEB1F81004EDC37 /* Services */,
+				26244C2B2CEB9C9100F3FBB8 /* Extension */,
 				263D2B052CEB019400F7E540 /* Resources */,
 			);
 			path = PizzaShop;
+			sourceTree = "<group>";
+		};
+		26244C2B2CEB9C9100F3FBB8 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				26244C2C2CEB9CCF00F3FBB8 /* Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		263D2B022CEB012200F7E540 /* App */ = {
@@ -144,6 +160,7 @@
 			buildPhases = (
 				2607BE172CEA6C2400E06092 /* Sources */,
 				2607BE182CEA6C2400E06092 /* Frameworks */,
+				26F000D62CEB682C004EDC37 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -187,6 +204,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		26F000D62CEB682C004EDC37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26F000D72CEB6831004EDC37 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2607BE172CEA6C2400E06092 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -194,6 +222,7 @@
 			files = (
 				2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */,
 				263D2B082CEB025100F7E540 /* ProductCell.swift in Sources */,
+				26244C2D2CEB9CCF00F3FBB8 /* Extension.swift in Sources */,
 				26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */,
 				26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */,
 				2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */,
