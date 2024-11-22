@@ -11,7 +11,8 @@ import UIKit
 final class MenuScreenVC: UIViewController {
     
     let productService = ProductsService()
-    //это заставляет обновлять таблицу при каждом обновлении перевменной products?
+    //это заставляет обновлять таблицу при каждом обновлении переменной products?
+    
     var products: [Product] = [] {
         didSet {
             tableView.reloadData()
@@ -21,17 +22,21 @@ final class MenuScreenVC: UIViewController {
     //всегда был вопрос по набору параметров которые мы устанавливаем при инициализации во время создания таблицы
     //private lazy - не сразу появилось, не совсем понимаю ее логику в ключе клоужура (тем более без нее - не работает)
     private lazy var tableView: UITableView = {
-        //не думал что их можно прописать тут (всегдла прописывал в viewDidLoad())
+        
+        //не думал что их можно прописать тут (всегда прописывал в viewDidLoad())
         $0.dataSource = self //таблица делегирует свои методы по заполнению таблицы (datasource)
-        $0.delegate = self //методы поведения (delegate) на выполение контроллеру
+        $0.delegate = self //методы поведения (delegate) на выполнение контроллеру
+        
         //Чтобы ячейка взлетела нужно зарегистрировать ячейку в таблице
         //что дает сокращенная форма записи:
         //tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseId)
-        $0.registerCell(ProductCell.self) // - просто для понимания - что это дает?
+        //регистрируем несколько ячеек в одной таблице
+        $0.registerCell(ProductCell.self)
+        $0.registerCell(PromoCell.self)
         //если мы НЕ используем SnapKit требуется translatesAutoresizingMaskIntoConstraints установить false!!
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .orange
-        $0.rowHeight = UIScreen.main.bounds.width * 0.4
+        //$0.rowHeight = UIScreen.main.bounds.width * 0.4
         $0.separatorStyle = .none
         $0.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
         return $0
@@ -57,10 +62,12 @@ final class MenuScreenVC: UIViewController {
 extension MenuScreenVC {
     //установка UI
     private func setupViews() {
-        view.addSubview(tableView)
+        [tableView].forEach{
+            view.addSubview($0)
+        }
     }
     
-    //установка констрэйнтов
+    //установка констрэйнтов (переделать под SNP)
     private func setupConstraints(){
         let safeArea = view.safeAreaLayoutGuide
         tableView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0).isActive = true
@@ -72,22 +79,21 @@ extension MenuScreenVC {
 
 extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return 1 //Возвращаем количество ячеек в таблице в секции
         //Количество ячеек будет создаваться от количества элементов в массиве - products
         return products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //создать ячейку в методе датасорса tableView: cellForRowAt:
-        
-        //использовал let cell без guard, также пока непонятна форма записи с дженериком
-        //let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseId, for: indexPath) as! ProductCell //работает без кастинга as! ProductCell
-        
-        let cell = tableView.dequeuCell(indexPath) as ProductCell
         let product = products[indexPath.row]
-        cell.update(product)
-        // return UITableViewCell() // инициализируем пустую ячейку
-        return cell
+        if product.isPromo {
+            let cell = tableView.dequeueCell(indexPath) as PromoCell
+            cell.update(product)
+            return cell
+        } else {
+            let cell = tableView.dequeueCell(indexPath) as ProductCell
+            cell.update(product)
+            return cell
+        }
     }
     
 }

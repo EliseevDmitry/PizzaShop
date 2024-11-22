@@ -9,17 +9,8 @@ import UIKit
 
 final class ProductCell: UITableViewCell {
     
-    static let reuseId = "ProductCell" //зачем static?? стало понятно - forCellReuseIdentifier - String (поэтому и static)
-    
-    //    private var containerView: UIView = {
-    //        var view = UIView()
-    //        view.backgroundColor = .white
-    //        view.applyShadow(cornerRadius: 10)
-    //        view.translatesAutoresizingMaskIntoConstraints = false
-    //        return view
-    //    }()
-    
-    //идея в краткости? и лаконичности?
+    static let reuseId = "ProductCell"
+
     private var containerView: UIView = {
         $0.backgroundColor = .white
         $0.applyShadow(cornerRadius: 10)
@@ -83,10 +74,11 @@ final class ProductCell: UITableViewCell {
     private var productImageView: UIImageView = {
         $0.image = UIImage(named: "hawaii")
         $0.contentMode = .scaleAspectFill
+        
         //        эта история не поехала без SnapKit (делал через через constraint), также пришлось у TableView делать высоту ячейки под размер изображения Pizza - tableView.rowHeight = UIScreen.main.bounds.width * 0.4
         //        let width = UIScreen.main.bounds.width
-        //        imageView.heightAnchor.constraint(equalToConstant: 0.40 * width).isActive = true
-        //        imageView.widthAnchor.constraint(equalToConstant: 0.40 * width).isActive = true
+        $0.heightAnchor.constraint(equalToConstant: 0.40 * Screen.height).isActive = true
+        $0.widthAnchor.constraint(equalToConstant: 0.40 * Screen.width).isActive = true
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIImageView())
@@ -163,13 +155,20 @@ extension ProductCell {
         containerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -Layout.horisontal).isActive = true
         containerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -Layout.vertical).isActive = true
         containerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: Layout.horisontal).isActive = true
+        
         productImageView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: Layout.offset).isActive = true
         productImageView.topAnchor.constraint(equalTo: self.containerView.topAnchor).isActive = true
         productImageView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor).isActive = true
         productImageView.heightAnchor.constraint(equalTo: self.containerView.heightAnchor).isActive = true
         productImageView.widthAnchor.constraint(equalTo: productImageView.heightAnchor).isActive = true
         productImageView.centerYAnchor.constraint(equalTo: self.verticalStackView.centerYAnchor).isActive = true
+        
         verticalStackView.rightAnchor.constraint(equalTo: self.containerView.rightAnchor, constant: -Layout.offset).isActive = true
         verticalStackView.leftAnchor.constraint(equalTo: self.productImageView.rightAnchor, constant: Layout.offset).isActive = true
+        
+//        let constraint = verticalStackView.leftAnchor.constraint(equalTo: self.productImageView.rightAnchor, constant: Layout.offset)
+//        constraint.priority = .defaultHigh
+//        constraint.isActive = true
+        
     }
 }
