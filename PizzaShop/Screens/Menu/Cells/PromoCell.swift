@@ -12,7 +12,7 @@ final class PromoCell: UITableViewCell {
     
     static let reuseId = "PromoCell"
 
-    private var verticalStackView: UIStackView = {
+    private lazy var verticalStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10 
         $0.alignment = .center
@@ -25,13 +25,13 @@ final class PromoCell: UITableViewCell {
         return $0
     }(UIStackView())
     
-    private var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         $0.text = "Гавайская"
         $0.font = UIFont.boldSystemFont(ofSize: 20)
         return $0
     }(UILabel())
     
-    private var detailLabel: UILabel = {
+    private lazy var detailLabel: UILabel = {
         $0.text = "Тесто, Цыпленок, моцарелла, томатный соус"
         $0.textColor = .darkGray
         $0.numberOfLines = 0
@@ -39,7 +39,7 @@ final class PromoCell: UITableViewCell {
         return $0
     }(UILabel())
     
-    private var priceButton: UIButton = {
+    private lazy var priceButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         configuration.baseBackgroundColor = .orange.withAlphaComponent(0.1)
         configuration.baseForegroundColor = UIColor.brown
@@ -50,7 +50,7 @@ final class PromoCell: UITableViewCell {
         return $0
     }(UIButton())
 
-    private var productImageView: UIImageView = {
+    private lazy var productImageView: UIImageView = {
         $0.image = UIImage(named: "hawaii")
         $0.contentMode = .scaleAspectFill
         //через Extension устанавливаем размер view относительно используемого экрана мобильного устройства
