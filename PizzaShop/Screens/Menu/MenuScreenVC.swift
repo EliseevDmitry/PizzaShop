@@ -70,11 +70,17 @@ extension MenuScreenVC {
     //установка констрэйнтов (переделать под SNP)
     private func setupConstraints(){
         let safeArea = view.safeAreaLayoutGuide
-        tableView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0).isActive = true
-        tableView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: .zero).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: .zero).isActive = true
-        tableView.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: .zero).isActive = true
+        tableView.snp.makeConstraints { make in
+            make.top.right.bottom.left.equalTo(safeArea)
+        }
     }
+//    private func setupConstraints(){
+//        let safeArea = view.safeAreaLayoutGuide
+//        tableView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0).isActive = true
+//        tableView.rightAnchor.constraint(equalTo: safeArea.rightAnchor, constant: .zero).isActive = true
+//        tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: .zero).isActive = true
+//        tableView.leftAnchor.constraint(equalTo: safeArea.leftAnchor, constant: .zero).isActive = true
+//    }
 }
 
 extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {

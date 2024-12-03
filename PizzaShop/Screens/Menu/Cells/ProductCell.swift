@@ -14,7 +14,6 @@ final class ProductCell: UITableViewCell {
     private var containerView: UIView = {
         $0.backgroundColor = .white
         $0.applyShadow(cornerRadius: 10)
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
     
@@ -22,18 +21,18 @@ final class ProductCell: UITableViewCell {
         $0.axis = .vertical
         $0.spacing = 15 // как бороться с magicNumber и нужно ли делать это тут?
         $0.alignment = .leading
+        
+        $0.distribution = .equalSpacing //уточнить компоновку
         //разобраться
         $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 0)
         $0.isLayoutMarginsRelativeArrangement = true
         //разобраться
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIStackView())
     
     private var nameLabel: UILabel = {
         $0.text = "Гавайская" //Хардкод
         $0.font = UIFont.boldSystemFont(ofSize: 20)
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
     
@@ -42,7 +41,6 @@ final class ProductCell: UITableViewCell {
         $0.textColor = .darkGray
         $0.numberOfLines = 0
         $0.font = UIFont.boldSystemFont(ofSize: 15)
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
     
@@ -54,32 +52,12 @@ final class ProductCell: UITableViewCell {
         configuration.buttonSize = .medium
         configuration.title = "от 469 руб"
         $0.configuration = configuration
-        //реализация через uiButtonConfiguration для IOS15
-        // button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIButton())
-    
-    //    private var priceButton: UIButton = {
-    //        $0.setTitle("от 469 руб", for: .normal)
-    //        $0.backgroundColor = .orange.withAlphaComponent(0.1) // сделать более прозрачно
-    //        $0.layer.cornerRadius = 20
-    //        $0.setTitleColor(.brown, for: .normal)
-    //        //реализация через uiButtonConfiguration для IOS15
-    //        // button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-    //        $0.translatesAutoresizingMaskIntoConstraints = false
-    //        return $0
-    //    }(UIButton())
     
     private var productImageView: UIImageView = {
         $0.image = UIImage(named: "hawaii")
         $0.contentMode = .scaleAspectFill
-        
-        //        эта история не поехала без SnapKit (делал через через constraint), также пришлось у TableView делать высоту ячейки под размер изображения Pizza - tableView.rowHeight = UIScreen.main.bounds.width * 0.4
-        //        let width = UIScreen.main.bounds.width
-        $0.heightAnchor.constraint(equalToConstant: 0.40 * Screen.height).isActive = true
-        $0.widthAnchor.constraint(equalToConstant: 0.40 * Screen.width).isActive = true
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIImageView())
     
@@ -94,9 +72,7 @@ final class ProductCell: UITableViewCell {
     }
     
     //Почему нам при создании ячейки нужно вызывать designated init который будет вызывать init у родительского класса
-    
-    
-    
+
     func update(_ product: Product) {
         nameLabel.text = product.name
         detailLabel.text = product.detail
@@ -104,21 +80,6 @@ final class ProductCell: UITableViewCell {
         productImageView.image = UIImage(named: product.image)
     }
     
-    
-    //При создании через Cocoa Touch Class создает два перегруженного метода. Нужно ли создавать через Cocoa - или просто голый Swift файл и делать более предсказуемые вещи самостоятельно?
-    
-    /*
-     override func awakeFromNib() {
-     super.awakeFromNib()
-     // Initialization code
-     }
-     
-     override func setSelected(_ selected: Bool, animated: Bool) {
-     super.setSelected(selected, animated: animated)
-     
-     // Configure the view for the selected state
-     }
-     */
 }
 
 extension ProductCell {
@@ -131,13 +92,6 @@ extension ProductCell {
     }
     
     private func setupViews(){
-        //        contentView.addSubview(containerView)
-        //        containerView.addSubview(productImageView)
-        //        containerView.addSubview(verticalStackView)
-        //        verticalStackView.addArrangedSubview(nameLabel)
-        //        verticalStackView.addArrangedSubview(detailLabel)
-        //        verticalStackView.addArrangedSubview(priceButton)
-        //эта история скорости не прибавляет - ?
         [containerView].forEach {
             contentView.addSubview($0)
         }
@@ -150,25 +104,29 @@ extension ProductCell {
     }
     
     private func setupConstraints() {
-        //Остается вопрос с magicNumber?
-        containerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: Layout.vertical).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -Layout.horisontal).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -Layout.vertical).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: Layout.horisontal).isActive = true
+        containerView.snp.makeConstraints { make in
+            make.left.right.equalTo(contentView).inset(Layout.horisontal)
+            make.top.bottom.equalTo(contentView).inset(Layout.vertical)
+            
+        }
         
-        productImageView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: Layout.offset).isActive = true
-        productImageView.topAnchor.constraint(equalTo: self.containerView.topAnchor).isActive = true
-        productImageView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor).isActive = true
-        productImageView.heightAnchor.constraint(equalTo: self.containerView.heightAnchor).isActive = true
-        productImageView.widthAnchor.constraint(equalTo: productImageView.heightAnchor).isActive = true
-        productImageView.centerYAnchor.constraint(equalTo: self.verticalStackView.centerYAnchor).isActive = true
+        productImageView.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(Layout.offset)
+            make.top.bottom.equalTo(containerView).inset(0)
+            make.height.equalTo(0.40 * Screen.width)
+            make.height.equalTo(productImageView.snp.width)
+        }
         
-        verticalStackView.rightAnchor.constraint(equalTo: self.containerView.rightAnchor, constant: -Layout.offset).isActive = true
-        verticalStackView.leftAnchor.constraint(equalTo: self.productImageView.rightAnchor, constant: Layout.offset).isActive = true
-        
-//        let constraint = verticalStackView.leftAnchor.constraint(equalTo: self.productImageView.rightAnchor, constant: Layout.offset)
-//        constraint.priority = .defaultHigh
-//        constraint.isActive = true
-        
+        verticalStackView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(containerView)
+            make.right.equalTo(containerView).inset(Layout.offset)
+            make.left.equalTo(productImageView.snp.right).offset(Layout.offset)
+        }
     }
+    
+//приоритет одного constraint над другим
+//let constraint = verticalStackView.leftAnchor.constraint(equalTo: self.productImageView.rightAnchor, constant: Layout.offset)
+//constraint.priority = .defaultHigh
+//constraint.isActive = true
+
 }
