@@ -11,13 +11,13 @@ final class ProductCell: UITableViewCell {
     
     static let reuseId = "ProductCell"
 
-    private var containerView: UIView = {
+    private lazy var containerView: UIView = {
         $0.backgroundColor = .white
         $0.applyShadow(cornerRadius: 10)
         return $0
     }(UIView())
     
-    private var verticalStackView: UIStackView = {
+    private lazy var verticalStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 15 // как бороться с magicNumber и нужно ли делать это тут?
         $0.alignment = .leading
@@ -30,13 +30,13 @@ final class ProductCell: UITableViewCell {
         return $0
     }(UIStackView())
     
-    private var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         $0.text = "Гавайская" //Хардкод
         $0.font = UIFont.boldSystemFont(ofSize: 20)
         return $0
     }(UILabel())
     
-    private var detailLabel: UILabel = {
+    private lazy var detailLabel: UILabel = {
         $0.text = "Тесто, Цыпленок, моцарелла, томатный соус"
         $0.textColor = .darkGray
         $0.numberOfLines = 0
@@ -55,7 +55,7 @@ final class ProductCell: UITableViewCell {
         return $0
     }(UIButton())
     
-    private var productImageView: UIImageView = {
+    private lazy var productImageView: UIImageView = {
         $0.image = UIImage(named: "hawaii")
         $0.contentMode = .scaleAspectFill
         return $0
@@ -113,7 +113,7 @@ extension ProductCell {
         productImageView.snp.makeConstraints { make in
             make.left.equalTo(containerView).offset(Layout.offset)
             make.top.bottom.equalTo(containerView).inset(0)
-            make.height.equalTo(0.40 * Screen.width)
+            make.width.equalTo(0.40 * Screen.width)
             make.height.equalTo(productImageView.snp.width)
         }
         

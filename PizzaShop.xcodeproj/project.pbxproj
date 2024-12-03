@@ -12,6 +12,9 @@
 		2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */; };
 		26244C2D2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26244C2C2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift */; };
 		263D2B082CEB025100F7E540 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2B072CEB025100F7E540 /* ProductCell.swift */; };
+		2663656F2CFF1687007C2D80 /* PromoItemsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663656E2CFF1687007C2D80 /* PromoItemsCell.swift */; };
+		266365722CFF209D007C2D80 /* PizzaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266365712CFF209D007C2D80 /* PizzaCell.swift */; };
+		266365742CFF53FB007C2D80 /* UICollectionView+dequeue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */; };
 		26E146B52CF8625800243B62 /* PromoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E146B42CF8625800243B62 /* PromoCell.swift */; };
 		26E146BC2CF868EE00243B62 /* UIView+applyShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E146BB2CF868EE00243B62 /* UIView+applyShadow.swift */; };
 		26E146C22CF86D3900243B62 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 26E146C12CF86D3900243B62 /* SnapKit */; };
@@ -32,6 +35,9 @@
 		2607BE2A2CEA6C2500E06092 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		26244C2C2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+dequeue.swift"; sourceTree = "<group>"; };
 		263D2B072CEB025100F7E540 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		2663656E2CFF1687007C2D80 /* PromoItemsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoItemsCell.swift; sourceTree = "<group>"; };
+		266365712CFF209D007C2D80 /* PizzaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaCell.swift; sourceTree = "<group>"; };
+		266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+dequeue.swift"; sourceTree = "<group>"; };
 		26E146B42CF8625800243B62 /* PromoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCell.swift; sourceTree = "<group>"; };
 		26E146BB2CF868EE00243B62 /* UIView+applyShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+applyShadow.swift"; sourceTree = "<group>"; };
 		26E146C32CF86EE100243B62 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
@@ -89,6 +95,7 @@
 			children = (
 				26244C2C2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift */,
 				26E146BB2CF868EE00243B62 /* UIView+applyShadow.swift */,
+				266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -115,6 +122,7 @@
 			children = (
 				2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */,
 				263D2B062CEB022200F7E540 /* Cells */,
+				266365702CFF2044007C2D80 /* CollViewCells */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -135,6 +143,7 @@
 			children = (
 				263D2B072CEB025100F7E540 /* ProductCell.swift */,
 				26E146B42CF8625800243B62 /* PromoCell.swift */,
+				2663656E2CFF1687007C2D80 /* PromoItemsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -144,6 +153,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		266365702CFF2044007C2D80 /* CollViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				266365712CFF209D007C2D80 /* PizzaCell.swift */,
+			);
+			path = CollViewCells;
 			sourceTree = "<group>";
 		};
 		26F000CB2CEB1F50004EDC37 /* Models */ = {
@@ -235,13 +252,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */,
+				2663656F2CFF1687007C2D80 /* PromoItemsCell.swift in Sources */,
 				263D2B082CEB025100F7E540 /* ProductCell.swift in Sources */,
 				26244C2D2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift in Sources */,
 				26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */,
 				26E146BC2CF868EE00243B62 /* UIView+applyShadow.swift in Sources */,
 				26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */,
 				26E146C42CF86EE700243B62 /* Screen.swift in Sources */,
+				266365722CFF209D007C2D80 /* PizzaCell.swift in Sources */,
 				2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */,
+				266365742CFF53FB007C2D80 /* UICollectionView+dequeue.swift in Sources */,
 				2607BE212CEA6C2400E06092 /* SceneDelegate.swift in Sources */,
 				26E146B52CF8625800243B62 /* PromoCell.swift in Sources */,
 			);

@@ -33,6 +33,7 @@ final class MenuScreenVC: UIViewController {
         //регистрируем несколько ячеек в одной таблице
         $0.registerCell(ProductCell.self)
         $0.registerCell(PromoCell.self)
+        $0.registerCell(PromoItemsCell.self)
         //если мы НЕ используем SnapKit требуется translatesAutoresizingMaskIntoConstraints установить false!!
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .orange
@@ -86,11 +87,15 @@ extension MenuScreenVC {
 extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //Количество ячеек будет создаваться от количества элементов в массиве - products
-        return products.count
+        return products.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let product = products[indexPath.row]
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueCell(indexPath) as PromoItemsCell
+            return cell
+        }
+        let product = products[indexPath.row-1]
         if product.isPromo {
             let cell = tableView.dequeueCell(indexPath) as PromoCell
             cell.update(product)
