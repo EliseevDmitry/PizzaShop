@@ -21,7 +21,6 @@
 		26E146C42CF86EE700243B62 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E146C32CF86EE100243B62 /* Screen.swift */; };
 		26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CD2CEB1FA7004EDC37 /* Product.swift */; };
 		26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */; };
-		26F000D22CEB663C004EDC37 /* Info.plist in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F000CA2CEB1ADD004EDC37 /* Info.plist */; };
 		26F000D32CEB6641004EDC37 /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
 		26F000D72CEB6831004EDC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -52,7 +51,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				26E146C22CF86D3900243B62 /* SnapKit in Frameworks */,
-				26F000D22CEB663C004EDC37 /* Info.plist in Frameworks */,
 				26F000D32CEB6641004EDC37 /* Assets.xcassets in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,7 +205,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					2607BE1A2CEA6C2400E06092 = {
 						CreatedOnToolsVersion = 15.3;
