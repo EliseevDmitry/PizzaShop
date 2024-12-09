@@ -86,6 +86,7 @@ final class PromoCell: UITableViewCell {
     override func layoutSubviews() {
         
         super.layoutSubviews()
+        //не захотела в объявлении заводиться
         let path = UIBezierPath(
             roundedRect: roundedView.bounds,
             byRoundingCorners: [.topLeft, .topRight],
@@ -95,6 +96,7 @@ final class PromoCell: UITableViewCell {
         shapeLayer.path = path.cgPath
         roundedView.layer.mask = shapeLayer
 
+        
         productImageView.layer.cornerRadius = productImageView.frame.width/2
         
     }
