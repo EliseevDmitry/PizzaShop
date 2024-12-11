@@ -17,26 +17,6 @@ extension UIView {
         layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
-    func dropShadow() {
-           // Убираем обрезку слоя
-           layer.masksToBounds = false
-   
-           // Настройка цвета и прозрачности тени
-           layer.shadowColor = UIColor.black.cgColor
-           layer.shadowOpacity = 0.5
-           layer.shadowOffset = CGSize(width: 10, height: 10) // Смещение тени
-           layer.shadowRadius = 10 // Радиус размытия тени
-   
-           // Устанавливаем правильный путь для тени с учетом округленных углов
-           let path = UIBezierPath(
-               roundedRect: bounds.insetBy(dx: -layer.shadowRadius, dy: -layer.shadowRadius), // Увеличиваем область для тени
-               byRoundingCorners: [.topLeft, .topRight],
-               cornerRadii: CGSize(width: Screen.width / 2, height: Screen.width / 2)
-           )
-           layer.shadowPath = path.cgPath
-   
-           // Растрируем тень для оптимизации производительности
-           layer.shouldRasterize = true
-       }
+
     
 }

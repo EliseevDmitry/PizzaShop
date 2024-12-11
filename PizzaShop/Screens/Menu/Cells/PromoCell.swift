@@ -13,8 +13,8 @@ final class PromoCell: UITableViewCell {
     static let reuseId = "PromoCell"
     
     private lazy var roundedView: UIView = {
-        $0.backgroundColor = .green
-        $0.applyShadow(cornerRadius: 10)
+        $0.backgroundColor = .gray
+        //$0.applyShadow(cornerRadius: 10)
         return $0
     }(UIView())
     
@@ -28,6 +28,8 @@ final class PromoCell: UITableViewCell {
         //разобраться
         return $0
     }(UIStackView())
+    
+    
     
     private lazy var nameLabel: UILabel = {
         $0.text = "Гавайская"
@@ -86,19 +88,57 @@ final class PromoCell: UITableViewCell {
     override func layoutSubviews() {
         
         super.layoutSubviews()
-        //не захотела в объявлении заводиться
-        let path = UIBezierPath(
-            roundedRect: roundedView.bounds,
-            byRoundingCorners: [.topLeft, .topRight],
-            cornerRadii: CGSize(width: Screen.width / 2, height: Screen.width / 2)
-        )
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        roundedView.layer.mask = shapeLayer
+        
+//        let topLeftRadius = CGSize(width: Screen.width / 2, height: Screen.width / 2)
+//      
+//        let bottomLeftRadius = CGSize(width: 10, height: 10)
 
+//        let topPath = UIBezierPath(
+//            roundedRect: CGRect(x: 0, y: 0, width: roundedView.bounds.width, height: roundedView.bounds.height),
+//            byRoundingCorners: [.topLeft, .topRight],
+//            cornerRadii: topLeftRadius
+//        )
+//
+//        let bottomPath = UIBezierPath(
+//            roundedRect: CGRect(x: 0, y: roundedView.bounds.height / 2, width: roundedView.bounds.width, height: roundedView.bounds.height / 2),
+//            byRoundingCorners: [.bottomLeft, .bottomRight],
+//            cornerRadii: bottomLeftRadius
+//        )
+
+//        topPath.append(bottomPath)
         
+        let pach = UIBezierPath()
+        pach.move(to: CGPoint(x: roundedView.bounds.width / 2, y: 0))
+        pach.addArc(withCenter: CGPoint(x: roundedView.bounds.width / 2, y: roundedView.bounds.width / 2), radius: roundedView.bounds.width / 2, startAngle: .pi*3/4, endAngle: .pi/4, clockwise: true)
+        pach.addLine(to: CGPoint(x: roundedView.bounds.width, y: roundedView.bounds.height))
+        pach.addLine(to: CGPoint(x: 0, y: roundedView.bounds.height))
+        pach.addLine(to: CGPoint(x: 0, y: roundedView.bounds.width / 2))
+        pach.addLine(to: CGPoint(x: Screen.width / 2, y: 0))
+        pach.close()
+        
+
+
+        let shapeLayer = CAShapeLayer()
+       // shapeLayer.path = topPath.cgPath
+        shapeLayer.path = pach.cgPath
+        shapeLayer.masksToBounds = false
+        
+        //shapeLayer.backgroundColor = UIColor.black.cgColor
+        //shapeLayer.fillColor = UIColor.black.cgColor
+        //shapeLayer.borderColor = UIColor.black.cgColor
+        shapeLayer.shadowColor = UIColor.black.cgColor //не работает
+        
+        shapeLayer.shadowOpacity = 0.9
+        shapeLayer.shadowOffset = .zero
+        shapeLayer.shadowRadius = 20
+        shapeLayer.shouldRasterize = true
+
+        roundedView.layer.mask = shapeLayer
+        //offscreenrendering
+        
+        //print(productImageView.bounds)
         productImageView.layer.cornerRadius = productImageView.frame.width/2
-        
+
     }
     
 }

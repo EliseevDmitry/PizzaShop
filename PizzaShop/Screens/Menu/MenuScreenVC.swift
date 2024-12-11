@@ -10,7 +10,8 @@ import UIKit
 //закрываем класс от наследования
 final class MenuScreenVC: UIViewController {
     
-    let productService = ProductsService()
+    //let productService = ProductsService()
+    let productsLoader = ProductsLoader()
     //это заставляет обновлять таблицу при каждом обновлении переменной products?
     
     var products: [Product] = [] {
@@ -55,7 +56,11 @@ final class MenuScreenVC: UIViewController {
     }
     
     private func fetchProducts() {
-        products = productService.fetchProducts()
+        //products = productService.fetchProducts()
+       
+        productsLoader.loadProducts() { [weak self] item in
+            self?.products = item
+        }
     }
 }
 
