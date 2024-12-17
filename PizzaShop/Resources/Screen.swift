@@ -11,4 +11,6 @@ import UIKit
 struct Screen {
     static let width = UIScreen.main.bounds.width
     static let height = UIScreen.main.bounds.height
+    
+    static let widthPromoCell = UIScreen.main.bounds.width - 16
 }
