@@ -47,13 +47,13 @@ final class MenuScreenVC: UIViewController {
     //точка входа в контроллер
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(UIScreen.main.bounds.width)
-        print(UIScreen.main.bounds.height)
         view.backgroundColor = .red
         setupViews()
         setupConstraints()
         fetchProducts()
     }
+    
+    
     
     private func fetchProducts() {
         //products = productService.fetchProducts()

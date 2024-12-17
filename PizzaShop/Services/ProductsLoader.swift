@@ -34,7 +34,6 @@ struct ProductsLoader: IProductsLoader {
                 let products = try decoder.decode([Product].self, from: data)
                 DispatchQueue.main.async {
                     completion(products)
-                    print("Good.")
                 }
             } catch let error {
                 print("Error decoding data - \(error.localizedDescription)")
