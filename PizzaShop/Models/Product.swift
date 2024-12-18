@@ -7,10 +7,15 @@
 
 import Foundation
 
+struct AllProducts: Codable {
+    let titleSection: String
+    let products: [Product]
+}
+
 struct Product: Codable {
-    var name: String
-    var detail: String
-    var price: Int
-    var image: String
-    var isPromo: Bool
+    let name: String
+    let detail: String
+    let price: Int
+    let image: String
+    let isPromo: Bool
 }

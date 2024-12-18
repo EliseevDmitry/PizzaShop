@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class PromoItemsCell: UITableViewCell {
+final class TopMenuCell: UITableViewCell {
     
     static let reuseId = "PromoItemsCell"
 
@@ -69,7 +69,7 @@ final class PromoItemsCell: UITableViewCell {
 
 }
 
-extension PromoItemsCell {
+extension TopMenuCell {
 
     private func setupViews(){
            [verticalStackView].forEach {
@@ -104,7 +104,7 @@ extension PromoItemsCell {
     
 }
 
-extension PromoItemsCell: UICollectionViewDelegate , UICollectionViewDataSource {
+extension TopMenuCell: UICollectionViewDelegate , UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }

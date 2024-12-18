@@ -22,7 +22,7 @@ struct ProductsLoader: IProductsLoader {
         self.decoder = decoder
     }
     
-    func loadProducts(completion: @escaping ([Product])->()) {
+    func loadProducts(completion: @escaping ([AllProducts])->()) {
         guard let url = URL(string: "http://localhost:3001/products") else { return }
         let request = URLRequest(url: url)
         let task = urlSession.dataTask(with: request) { data, response, error in
@@ -31,7 +31,7 @@ struct ProductsLoader: IProductsLoader {
                 return
             }
             do {
-                let products = try decoder.decode([Product].self, from: data)
+                let products = try decoder.decode([AllProducts].self, from: data)
                 DispatchQueue.main.async {
                     completion(products)
                 }
