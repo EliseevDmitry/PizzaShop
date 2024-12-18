@@ -14,7 +14,7 @@ final class MenuScreenVC: UIViewController {
     let productsLoader = ProductsLoader()
     //это заставляет обновлять таблицу при каждом обновлении переменной products?
     
-    var products: [Product] = [] {
+    var catProducts: [AllProducts] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -34,13 +34,13 @@ final class MenuScreenVC: UIViewController {
         //регистрируем несколько ячеек в одной таблице
         $0.registerCell(ProductCell.self)
         $0.registerCell(PromoCell.self)
-        $0.registerCell(PromoItemsCell.self)
+        $0.registerCell(TopMenuCell.self)
         //если мы НЕ используем SnapKit требуется translatesAutoresizingMaskIntoConstraints установить false!!
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .orange
         //$0.rowHeight = UIScreen.main.bounds.width * 0.4
         $0.separatorStyle = .none
-        $0.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
+        $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //отступ от верха таблицы 100
         return $0
     }(UITableView())
     
@@ -59,7 +59,7 @@ final class MenuScreenVC: UIViewController {
         //products = productService.fetchProducts()
        
         productsLoader.loadProducts() { [weak self] item in
-            self?.products = item
+            self?.catProducts = item
         }
     }
 }
@@ -92,15 +92,19 @@ extension MenuScreenVC {
 extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //Количество ячеек будет создаваться от количества элементов в массиве - products
-        return products.count + 1
+        
+        return catProducts[section].products.count //+ 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueCell(indexPath) as PromoItemsCell
-            return cell
-        }
-        let product = products[indexPath.row-1]
+       
+//        if products[indexPath.section] == 0 {
+//            if products[indexPath.section].products[indexPath.row] == 0 {
+//                let cell = tableView.dequeueCell(indexPath) as TopMenuCell
+//                return cell
+//            }
+//        }
+        let product = self.catProducts[indexPath.section].products[indexPath.row]
         if product.isPromo {
             let cell = tableView.dequeueCell(indexPath) as PromoCell
             cell.update(product)
@@ -111,5 +115,38 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return catProducts.count
+      }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Проверяем, что заголовок для нужной секции
+        if section == 0 {
+            let headerContainer = UIView()
+            headerContainer.backgroundColor = .white  // Сделаем фон прозрачным для теста
+
+            // Создаем коллекцию
+            let menu = MenuItemCV()
+
+            // Добавляем коллекцию в контейнер
+            headerContainer.addSubview(menu)
+
+            // Устанавливаем ограничения для коллекции с помощью SnapKit
+            menu.snp.makeConstraints { make in
+                make.edges.equalToSuperview()  // Заполняет весь контейнер
+            }
+
+            // Вернем контейнер с коллекцией как заголовок
+            return headerContainer
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    
     
 }

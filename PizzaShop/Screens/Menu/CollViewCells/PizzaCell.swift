@@ -35,13 +35,6 @@ final class PizzaCell: UICollectionViewCell {
 
 extension PizzaCell {
     
-    //почему структура а не enum - общепринятая практика?
-//    struct Layout {
-//        static let offset: CGFloat = 10
-//        static let horisontal: CGFloat = 16
-//        static let vertical: CGFloat = 8
-//    }
-    
     private func setupViews(){
         [containerView].forEach {
             contentView.addSubview($0)

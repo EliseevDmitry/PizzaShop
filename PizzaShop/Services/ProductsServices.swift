@@ -9,6 +9,8 @@ import Foundation
 
 final class ProductsService {
     
+    private let categories: [String] = ["Пиццы", "Комбо", "Закуски", "Коктейли", "Кофе", "Напитки", "Десерты", "Соусы", "Другие товары"]
+    
     //фотки взяты с - https://sushi-max.ru/magazin/folder/pitstsa
     private let products: [Product] = [
         Product(name: "Цыпленок с сыром", detail: "Цыпленок, Сыр моцарелла, Томаты, Сарный соус", price: 700, image: "chicken", isPromo: true),
@@ -26,4 +28,7 @@ final class ProductsService {
         return products
     }
     
+    func fetchMenuItems() -> [String] {
+        return categories
+    }
 }

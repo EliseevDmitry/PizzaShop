@@ -85,6 +85,7 @@ final class PromoCell: UITableViewCell {
         productImageView.layer.cornerRadius = productImageView.frame.width / 2
     }
     
+    
 //MARK: - FUNCTIONS
     
     func update(_ product: Product) {
