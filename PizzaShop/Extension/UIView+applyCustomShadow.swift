@@ -30,5 +30,8 @@ extension UIView {
         shapeLayer.shadowColor = UIColor.gray.cgColor
         shapeLayer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.insertSublayer(shapeLayer, at: 0)
+        
+        
+        print(self.layer.bounds.size)
     }
 }

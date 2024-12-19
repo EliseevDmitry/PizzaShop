@@ -67,6 +67,8 @@ final class PromoCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
+        //self.layoutIfNeeded()
+        contentView.layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {
@@ -76,12 +78,14 @@ final class PromoCell: UITableViewCell {
     //add custom layer in view
     override func draw(_ rect: CGRect) {
         super.draw(rect)
+        print(roundedView.frame.size)
         roundedView.addCustomShadow()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         // Применяем круглые углы к productImageView (требуется скруглить пиццу)
+        
         productImageView.layer.cornerRadius = productImageView.frame.width / 2
     }
     
@@ -118,16 +122,21 @@ extension PromoCell {
     private func setupConstraints() {
         roundedView.snp.makeConstraints { make in
             make.left.right.equalTo(contentView).inset(16)
-            make.top.bottom.equalTo(contentView).inset(8)
+            make.top.bottom.equalTo(contentView).inset(32)
         }
         verticalStackView.snp.makeConstraints { make in
             make.top.left.bottom.right.equalTo(roundedView).inset(8)
         }
         productImageView.snp.makeConstraints { make in
-            //make.width.equalTo(roundedView.snp.width).multipliedBy(0.9)
+           // make.width.equalTo(contentView.snp.width).multipliedBy(0.5)
+           // make.width.equalTo(roundedView.snp.width).multipliedBy(0.5)
             make.width.equalTo(roundedView.snp.width).inset(20)
             make.height.equalTo(productImageView.snp.width)
         }
     }
+    
+   
+        
+    
     
 }

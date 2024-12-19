@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// I - интерфейс "логика найминга"
 protocol IProductsLoader {
     init(urlSession: URLSession, decoder: JSONDecoder)
 }

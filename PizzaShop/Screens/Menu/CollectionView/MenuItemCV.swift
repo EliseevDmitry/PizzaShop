@@ -16,12 +16,15 @@ final class MenuItemCV: UICollectionView  {
     
     
     let categoryLayout = UICollectionViewFlowLayout()
-    let menuItems = ProductsService().fetchMenuItems()
+    
+    let menuItems = ProductsService().fetchMenuItems() //инициализировать из JSON
+    //var menuItems: [String]
 
     weak var cellDelegate: SelectCollectionViewItemProtocol?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: categoryLayout)
+        
         configure()
     }
     

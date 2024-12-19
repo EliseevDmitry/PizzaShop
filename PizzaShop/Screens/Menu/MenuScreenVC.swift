@@ -37,7 +37,9 @@ final class MenuScreenVC: UIViewController, SelectCollectionViewItemProtocol {
         //не думал что их можно прописать тут (всегда прописывал в viewDidLoad())
         $0.dataSource = self //таблица делегирует свои методы по заполнению таблицы (datasource)
         $0.delegate = self //методы поведения (delegate) на выполнение контроллеру
-        
+        if #available(iOS 15.0, *) {
+            $0.sectionHeaderTopPadding = 0
+        }
         //Чтобы ячейка взлетела нужно зарегистрировать ячейку в таблице
         //что дает сокращенная форма записи:
         //tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseId)
@@ -64,11 +66,7 @@ final class MenuScreenVC: UIViewController, SelectCollectionViewItemProtocol {
         fetchProducts()
         
     }
-    
 
-    
-    
-    
     private func fetchProducts() {
         productsLoader.loadProducts() { [weak self] item in
             self?.catProducts = item
@@ -127,35 +125,30 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
       }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Проверяем, что заголовок для нужной секции
-        print(section)
-        if section == 0 {
+    
+       // print(section)
+        if section == 1 {
             fixedHeaderView = UIView()
             guard let header = fixedHeaderView else { return nil }
-            header.backgroundColor = .white  // Сделаем фон прозрачным для теста
+            header.backgroundColor = .white
 
-            // Создаем коллекцию
-            
             menu.cellDelegate = self
-            // Добавляем коллекцию в контейнер
+            
             header.addSubview(menu)
 
-            // Устанавливаем ограничения для коллекции с помощью SnapKit
             menu.snp.makeConstraints { make in
-                make.edges.equalToSuperview()  // Заполняет весь контейнер
+                make.edges.equalToSuperview()
             }
 
-            // Вернем контейнер с коллекцией как заголовок
             return header
         }
         print(section)
-        return nil
+        return UIView()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //return 44
         print("Секция № \(section)")
-        return section == 0 ? 44 : 0
+        return section == 1 ? 44 : 0
     }
     
 
