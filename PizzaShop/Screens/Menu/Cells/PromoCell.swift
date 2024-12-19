@@ -124,7 +124,8 @@ extension PromoCell {
             make.top.left.bottom.right.equalTo(roundedView).inset(8)
         }
         productImageView.snp.makeConstraints { make in
-            make.width.equalTo(roundedView.snp.width).multipliedBy(0.9)
+            //make.width.equalTo(roundedView.snp.width).multipliedBy(0.9)
+            make.width.equalTo(roundedView.snp.width).inset(20)
             make.height.equalTo(productImageView.snp.width)
         }
     }

@@ -158,6 +158,7 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
         return section == 0 ? 44 : 0
     }
     
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
             let visibleCells = tableView.visibleCells
