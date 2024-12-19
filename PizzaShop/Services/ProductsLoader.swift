@@ -33,6 +33,7 @@ struct ProductsLoader: IProductsLoader {
             do {
                 let products = try decoder.decode([AllProducts].self, from: data)
                 DispatchQueue.main.async {
+                    print(products)
                     completion(products)
                 }
             } catch let error {
