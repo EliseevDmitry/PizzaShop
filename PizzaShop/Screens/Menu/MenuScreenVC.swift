@@ -8,15 +8,14 @@
 import UIKit
 
 //закрываем класс от наследования
-final class MenuScreenVC: UIViewController, SelectCollectionViewItemProtocol {
+// , SelectCollectionViewItemProtocol
+final class MenuScreenVC: UIViewController {
+    
     func selectItem(index: Int) {
         let indexPath = IndexPath(row: 0, section: index)
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
-    
 
-    
-    
     //let productService = ProductsService()
     let productsLoader = ProductsLoader()
     //это заставляет обновлять таблицу при каждом обновлении переменной products?
@@ -27,8 +26,9 @@ final class MenuScreenVC: UIViewController, SelectCollectionViewItemProtocol {
         }
     }
     
-    var fixedHeaderView: UIView?
+    //var fixedHeaderView: UIView?
     let menu = MenuItemCV()
+    var indexCatArr: [IndexPath] = []
     
     //всегда был вопрос по набору параметров которые мы устанавливаем при инициализации во время создания таблицы
     //private lazy - не сразу появилось, не совсем понимаю ее логику в ключе клоужура (тем более без нее - не работает)
@@ -54,6 +54,11 @@ final class MenuScreenVC: UIViewController, SelectCollectionViewItemProtocol {
         $0.separatorStyle = .none
         $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //отступ от верха таблицы 100
         
+        //
+        $0.estimatedRowHeight = 458  // Используйте предполагаемую высоту
+        $0.rowHeight = UITableView.automaticDimension
+        //
+        
         return $0
     }(UITableView())
     
@@ -65,12 +70,17 @@ final class MenuScreenVC: UIViewController, SelectCollectionViewItemProtocol {
         setupConstraints()
         fetchProducts()
         
+        setupObservers()
     }
 
     private func fetchProducts() {
         productsLoader.loadProducts() { [weak self] item in
             self?.catProducts = item
         }
+    }
+    
+    func setupObservers() {
+        //tableView.onProductSelected = {}
     }
 }
 
@@ -83,7 +93,6 @@ extension MenuScreenVC {
         }
     }
     
-    //установка констрэйнтов (переделать под SNP)
     private func setupConstraints(){
         let safeArea = view.safeAreaLayoutGuide
         tableView.snp.makeConstraints { make in
@@ -95,21 +104,26 @@ extension MenuScreenVC {
 extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //Количество ячеек будет создаваться от количества элементов в массиве - products
-        
-        return catProducts[section].products.count //+ 1
+        let countProduct = catProducts.map{$0.products.count}.reduce(0){ $0 + $1 }
+        return countProduct
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
 //        if products[indexPath.section] == 0 {
 //            if products[indexPath.section].products[indexPath.row] == 0 {
 //                let cell = tableView.dequeueCell(indexPath) as TopMenuCell
 //                return cell
 //            }
 //        }
-        let product = self.catProducts[indexPath.section].products[indexPath.row]
+        let products = catProducts.flatMap{$0.products}
+        let product = products[indexPath.row]
         if product.isPromo {
+            indexCatArr.append(indexPath)
             let cell = tableView.dequeueCell(indexPath) as PromoCell
+            
+            print("\(cell.bounds) - ячейка ПРОМО")
+            print("\(cell.frame) - ячейка ПРОМО")
+            
             cell.update(product)
             return cell
         } else {
@@ -120,52 +134,47 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("количество секций - \(catProducts.count)")
-        return catProducts.count
-      }
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
-       // print(section)
-        if section == 1 {
-            fixedHeaderView = UIView()
-            guard let header = fixedHeaderView else { return nil }
-            header.backgroundColor = .white
-
-            menu.cellDelegate = self
+        if section == 0 {
+            let fixedHeaderView = UIView()
+            //guard let header = fixedHeaderView else { return nil }
+            fixedHeaderView.backgroundColor = .white
+            //menu.cellDelegate = self
             
-            header.addSubview(menu)
-
+            menu.onProductSelected = { index in
+                print(index)
+                print(self.indexCatArr)
+                tableView.scrollToRow(at: self.indexCatArr[index], at: .top, animated: true)
+            }
+            
+            fixedHeaderView.addSubview(menu)
             menu.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-
-            return header
+            return fixedHeaderView
         }
-        print(section)
         return UIView()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        print("Секция № \(section)")
-        return section == 1 ? 44 : 0
+        return section == 0 ? 44 : 0
     }
     
 
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let visibleCells = tableView.visibleCells
-            
-            // Получаем индекс первой видимой ячейки
-            if let firstVisibleCell = visibleCells.first,
-               let indexPath = tableView.indexPath(for: firstVisibleCell) {
-                
-                let section = indexPath.section
-                
-                print("Начало новой секции: \(section)")
-               // menu.cellForItem(at: IndexPath(row: 0, section: section))
-            }
-        }
+    //Массив промо - и индекс
+    //выравнивание по экрану
+    
+
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 100  // Замените на нужную высоту для ячейки
+//    }
+
+    
+
     
     //
 //    func scrollToSection(section: Int) {

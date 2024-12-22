@@ -8,19 +8,20 @@
 import UIKit
 import SnapKit
 
-protocol SelectCollectionViewItemProtocol: AnyObject {
-    func selectItem(index: Int)
-}
+//protocol SelectCollectionViewItemProtocol: AnyObject {
+//    func selectItem(index: Int)
+//}
 
 final class MenuItemCV: UICollectionView  {
     
+    var onProductSelected: ((Int)->())?
     
     let categoryLayout = UICollectionViewFlowLayout()
     
     let menuItems = ProductsService().fetchMenuItems() //инициализировать из JSON
     //var menuItems: [String]
 
-    weak var cellDelegate: SelectCollectionViewItemProtocol?
+    //weak var cellDelegate: SelectCollectionViewItemProtocol?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: categoryLayout)
@@ -41,10 +42,11 @@ final class MenuItemCV: UICollectionView  {
 
 extension MenuItemCV: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
-        
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true) //перемещение при нажатии на требуюмую ячейку
-        cellDelegate?.selectItem(index: indexPath.item) //передаем indexPath в cellDelegate
+        
+        onProductSelected?(indexPath.item)
+        
+        //cellDelegate?.selectItem(index: indexPath.item) //передаем indexPath в cellDelegate
     }
 }
 

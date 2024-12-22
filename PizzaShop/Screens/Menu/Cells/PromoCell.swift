@@ -14,7 +14,7 @@ final class PromoCell: UITableViewCell {
     
 //MARK: - UI ELEMENTS
     private lazy var roundedView: UIView = {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .red
         return $0
     }(UIView())
     
@@ -68,7 +68,9 @@ final class PromoCell: UITableViewCell {
         setupViews()
         setupConstraints()
         //self.layoutIfNeeded()
-        contentView.layoutIfNeeded()
+        //contentView.layoutIfNeeded()
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -79,13 +81,13 @@ final class PromoCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         print(roundedView.frame.size)
-        roundedView.addCustomShadow()
+        //roundedView.addCustomShadow()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         // Применяем круглые углы к productImageView (требуется скруглить пиццу)
-        
+        //roundedView.addCustomShadow()
         productImageView.layer.cornerRadius = productImageView.frame.width / 2
     }
     
@@ -120,10 +122,14 @@ extension PromoCell {
     //insert - right и bottom смещаются (-) знаком
     //offset - смещение с положительным знаком
     private func setupConstraints() {
+        
         roundedView.snp.makeConstraints { make in
             make.left.right.equalTo(contentView).inset(16)
+            //ругается
             make.top.bottom.equalTo(contentView).inset(32)
         }
+        
+
         verticalStackView.snp.makeConstraints { make in
             make.top.left.bottom.right.equalTo(roundedView).inset(8)
         }
