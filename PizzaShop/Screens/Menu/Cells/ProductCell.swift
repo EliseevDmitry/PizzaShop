@@ -107,7 +107,7 @@ extension ProductCell {
         containerView.snp.makeConstraints { make in
             make.left.right.equalTo(contentView).inset(Layout.horisontal)
             make.top.bottom.equalTo(contentView).inset(Layout.vertical)
-            
+            make.height.equalTo(containerView.snp.width).priority(.low)
         }
         
         productImageView.snp.makeConstraints { make in
@@ -115,12 +115,15 @@ extension ProductCell {
             make.top.bottom.equalTo(containerView).inset(0)
             make.width.equalTo(0.40 * Screen.width)
             make.height.equalTo(productImageView.snp.width)
+            make.height.equalTo(productImageView.snp.width).priority(.low)
         }
         
         verticalStackView.snp.makeConstraints { make in
             make.top.bottom.equalTo(containerView)
             make.right.equalTo(containerView).inset(Layout.offset)
             make.left.equalTo(productImageView.snp.right).offset(Layout.offset)
+           
+            make.height.equalTo(containerView.snp.height).priority(.high)
         }
     }
     

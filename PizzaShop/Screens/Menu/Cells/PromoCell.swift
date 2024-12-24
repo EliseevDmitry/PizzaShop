@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 
 final class PromoCell: UITableViewCell {
-    
+    var hasShadow = false
     static let reuseId = "PromoCell"
     
 //MARK: - UI ELEMENTS
     private lazy var roundedView: UIView = {
-        $0.backgroundColor = .red
+        $0.backgroundColor = .clear
         return $0
     }(UIView())
     
@@ -69,8 +69,6 @@ final class PromoCell: UITableViewCell {
         setupConstraints()
         //self.layoutIfNeeded()
         //contentView.layoutIfNeeded()
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -80,8 +78,12 @@ final class PromoCell: UITableViewCell {
     //add custom layer in view
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        print(roundedView.frame.size)
-        //roundedView.addCustomShadow()
+        
+        if hasShadow == false {
+            roundedView.addCustomShadow()
+            print("отрисована - Тень - !!!!!!!!!!!!")
+            hasShadow.toggle()
+        }
     }
     
     override func layoutSubviews() {

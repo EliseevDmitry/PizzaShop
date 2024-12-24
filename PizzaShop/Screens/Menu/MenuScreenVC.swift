@@ -55,7 +55,7 @@ final class MenuScreenVC: UIViewController {
         $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //отступ от верха таблицы 100
         
         //
-        $0.estimatedRowHeight = 458  // Используйте предполагаемую высоту
+        //$0.estimatedRowHeight = 458  // Используйте предполагаемую высоту
         $0.rowHeight = UITableView.automaticDimension
         //
         
