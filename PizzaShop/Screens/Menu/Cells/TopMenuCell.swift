@@ -18,12 +18,8 @@ final class TopMenuCell: UITableViewCell {
         $0.axis = .vertical
         $0.spacing = 10
         $0.alignment = .leading
-        
-        //разобраться
         $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 0)
         $0.isLayoutMarginsRelativeArrangement = true
-        
-        //разобраться
         $0.backgroundColor = .blue
         return $0
     }(UIStackView())
@@ -63,42 +59,40 @@ final class TopMenuCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //Почему нам при создании ячейки нужно вызывать designated init который будет вызывать init у родительского класса
-   
 
 }
 
 extension TopMenuCell {
 
     private func setupViews(){
+        
            [verticalStackView].forEach {
                contentView.addSubview($0)
            }
+        
            [nameLabel, itemsPizzasCollectionView].forEach {
                verticalStackView.addArrangedSubview($0)
            }
+        
        }
 
        private func setupConstraints() {
            verticalStackView.snp.makeConstraints { make in
-               make.left.top.right.equalTo(contentView).inset(15) // Отступы только слева, сверху и справа
-               make.bottom.equalTo(contentView).inset(12) // Нижний отступ
+               make.left.top.right.equalTo(contentView).inset(15)
+               make.bottom.equalTo(contentView).inset(12)
            }
            
            itemsPizzasCollectionView.snp.makeConstraints { make in
-               make.right.equalTo(verticalStackView) // Горизонтальные отступы одинаковые
-               //make.height.equalTo(0.40 * Screen.width) // Высота коллекции
+               make.right.equalTo(verticalStackView)
                make.height.equalTo(calculateCollectionHeight())
            }
+           
        }
     
     private func calculateCollectionHeight() -> CGFloat {
         let itemWidth = Screen.width * 0.8
         let itemHeight = itemWidth / 3 * 2
-        
-        let totalHeight = itemHeight // Пример: допустим, два ряда элементов для коллекции
-        
+        let totalHeight = itemHeight
         return totalHeight
     }
     
@@ -113,6 +107,5 @@ extension TopMenuCell: UICollectionViewDelegate , UICollectionViewDataSource {
         let cell = collectionView.dequeueCell(indexPath) as PizzaCell
         return cell
     }
-    
-    
+ 
 }

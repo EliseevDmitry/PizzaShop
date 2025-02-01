@@ -9,10 +9,12 @@ import UIKit
 import SnapKit
 
 final class PromoCell: UITableViewCell {
-    var hasShadow = false
-    static let reuseId = "PromoCell"
     
+    static let reuseId = "PromoCell"
+    private var hasShadow = false
+
 //MARK: - UI ELEMENTS
+    
     private lazy var roundedView: UIView = {
         $0.backgroundColor = .clear
         return $0
@@ -22,10 +24,8 @@ final class PromoCell: UITableViewCell {
         $0.axis = .vertical
         $0.spacing = 10
         $0.alignment = .center
-        //разобраться
         $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 12, trailing: 0)
         $0.isLayoutMarginsRelativeArrangement = true
-        //разобраться
         return $0
     }(UIStackView())
     
@@ -67,29 +67,23 @@ final class PromoCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
-        //self.layoutIfNeeded()
-        //contentView.layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //add custom layer in view
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
+        //проверка отрисовки тени один раз
         if hasShadow == false {
             roundedView.addCustomShadow()
-            print("отрисована - Тень - !!!!!!!!!!!!")
             hasShadow.toggle()
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        // Применяем круглые углы к productImageView (требуется скруглить пиццу)
-        //roundedView.addCustomShadow()
         productImageView.layer.cornerRadius = productImageView.frame.width / 2
     }
     
@@ -107,6 +101,7 @@ final class PromoCell: UITableViewCell {
 //MARK: - EXTENSION
 
 extension PromoCell {
+    
     private func setupViews(){
         [roundedView].forEach {
             contentView.addSubview($0)
@@ -114,6 +109,7 @@ extension PromoCell {
         [verticalStackView].forEach {
             roundedView.addSubview($0)
         }
+        
         //addArrangedSubview($0) - это добавление элемента в сам стэк, в данном случае по вертикали
         //addSubview(...) - это добавление поверх стека (ZStack)
         [productImageView, nameLabel, detailLabel, priceButton].forEach {
@@ -123,28 +119,29 @@ extension PromoCell {
     
     //insert - right и bottom смещаются (-) знаком
     //offset - смещение с положительным знаком
+    
+    struct PromoLayout {
+        static let offset: CGFloat = 8
+        static let horisontal: CGFloat = 16
+        static let vertical: CGFloat = 32
+        static let inset: CGFloat = 20
+    }
+    
     private func setupConstraints() {
         
         roundedView.snp.makeConstraints { make in
-            make.left.right.equalTo(contentView).inset(16)
-            //ругается
-            make.top.bottom.equalTo(contentView).inset(32)
+            make.left.right.equalTo(contentView).inset(PromoLayout.horisontal)
+            make.top.bottom.equalTo(contentView).inset(PromoLayout.vertical)
         }
-        
 
         verticalStackView.snp.makeConstraints { make in
-            make.top.left.bottom.right.equalTo(roundedView).inset(8)
+            make.top.left.bottom.right.equalTo(roundedView).inset(PromoLayout.offset)
         }
+        
         productImageView.snp.makeConstraints { make in
-           // make.width.equalTo(contentView.snp.width).multipliedBy(0.5)
-           // make.width.equalTo(roundedView.snp.width).multipliedBy(0.5)
-            make.width.equalTo(roundedView.snp.width).inset(20)
+            make.width.equalTo(roundedView.snp.width).inset(PromoLayout.inset)
             make.height.equalTo(productImageView.snp.width)
         }
     }
-    
-   
-        
-    
-    
+  
 }
