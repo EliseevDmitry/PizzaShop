@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class PromoCell: UITableViewCell {
+final class PromoTableViewCell: UITableViewCell {
     
     static let reuseId = "PromoCell"
     private var hasShadow = false
@@ -100,7 +100,7 @@ final class PromoCell: UITableViewCell {
 
 //MARK: - EXTENSION
 
-extension PromoCell {
+extension PromoTableViewCell {
     
     private func setupViews(){
         [roundedView].forEach {

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TopMenuCell: UITableViewCell {
+final class TopMenuTableViewCell: UITableViewCell {
     
     static let reuseId = "PromoItemsCell"
 
@@ -45,7 +45,7 @@ final class TopMenuCell: UITableViewCell {
         $0.frame = .zero
         $0.collectionViewLayout = layout
         $0.showsHorizontalScrollIndicator = false
-        $0.registerCell(PizzaCell.self)
+        $0.registerCell(PizzaCellCollectionView.self)
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()))
     
@@ -62,7 +62,7 @@ final class TopMenuCell: UITableViewCell {
 
 }
 
-extension TopMenuCell {
+extension TopMenuTableViewCell {
 
     private func setupViews(){
         
@@ -98,13 +98,13 @@ extension TopMenuCell {
     
 }
 
-extension TopMenuCell: UICollectionViewDelegate , UICollectionViewDataSource {
+extension TopMenuTableViewCell: UICollectionViewDelegate , UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(indexPath) as PizzaCell
+        let cell = collectionView.dequeueCell(indexPath) as PizzaCellCollectionView
         return cell
     }
  

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MenuCVCell: UICollectionViewCell {
+class MenuCellCollectionView: UICollectionViewCell {
     static let reuseId = "MenuCell"
     
     private var containerView: UIView = {
@@ -47,7 +47,7 @@ class MenuCVCell: UICollectionViewCell {
     }
 }
 
-extension MenuCVCell {
+extension MenuCellCollectionView {
     
     private func setupViews(){
         [containerView, captionLabel].forEach {
@@ -57,8 +57,6 @@ extension MenuCVCell {
     
     private func setupConstraints() {
         containerView.snp.makeConstraints { make in
-//            make.left.right.equalTo(contentView).offset(20)
-//            make.top.bottom.equalTo(contentView).inset(5)
             make.left.top.right.bottom.equalTo(contentView)
         }
         captionLabel.snp.makeConstraints { make in

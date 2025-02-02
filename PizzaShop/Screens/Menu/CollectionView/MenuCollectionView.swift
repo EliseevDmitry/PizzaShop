@@ -12,7 +12,7 @@ import SnapKit
 //    func selectItem(index: Int)
 //}
 
-final class MenuItemCV: UICollectionView  {
+final class MenuCollectionView: UICollectionView  {
     
     var onProductSelected: ((Int)->())?
     
@@ -40,7 +40,7 @@ final class MenuItemCV: UICollectionView  {
 
 //MARK: - UICollectionViewDelegate
 
-extension MenuItemCV: UICollectionViewDelegate {
+extension MenuCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true) //перемещение при нажатии на требуюмую ячейку
         
@@ -52,13 +52,13 @@ extension MenuItemCV: UICollectionViewDelegate {
 
 //MARK: - UICollectionViewDataSource
 
-extension MenuItemCV: UICollectionViewDataSource {
+extension MenuCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         menuItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(indexPath) as MenuCVCell
+        let cell = collectionView.dequeueCell(indexPath) as MenuCellCollectionView
         cell.updateLabel(nameItem: menuItems[indexPath.row])
         return cell
     }
@@ -67,7 +67,7 @@ extension MenuItemCV: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension MenuItemCV: UICollectionViewDelegateFlowLayout {
+extension MenuCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let categoryFont = UIFont(name: "Arial Bold", size: 18)
         let categoryAttributes = [NSAttributedString.Key.font : categoryFont as Any]
@@ -80,7 +80,7 @@ extension MenuItemCV: UICollectionViewDelegateFlowLayout {
 }
 
 
-extension MenuItemCV {
+extension MenuCollectionView {
     
     private func configure(){
         backgroundColor = .none
@@ -92,7 +92,7 @@ extension MenuItemCV {
         
         delegate = self
         dataSource = self
-        registerCell(MenuCVCell.self)
+        registerCell(MenuCellCollectionView.self)
         
         selectItem(at: [0,0], animated: true, scrollPosition: .left) // установка первой ячейки
     }

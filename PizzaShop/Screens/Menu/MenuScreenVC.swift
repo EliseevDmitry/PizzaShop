@@ -22,7 +22,7 @@ final class MenuScreenVC: UIViewController {
         }
     }
 
-    let menu = MenuItemCV()
+    let menu = MenuCollectionView()
     var indexCatArr: [IndexPath] = []
 
     private lazy var tableView: UITableView = {
@@ -32,9 +32,9 @@ final class MenuScreenVC: UIViewController {
         if #available(iOS 15.0, *) {
             $0.sectionHeaderTopPadding = 0
         }
-        $0.registerCell(ProductCell.self)
-        $0.registerCell(PromoCell.self)
-        $0.registerCell(TopMenuCell.self)
+        $0.registerCell(ProductTableViewCell.self)
+        $0.registerCell(PromoTableViewCell.self)
+        $0.registerCell(TopMenuTableViewCell.self)
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .orange
         $0.separatorStyle = .none
@@ -89,11 +89,11 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
         let product = products[indexPath.row]
         if product.isPromo {
             indexCatArr.append(indexPath)
-            let cell = tableView.dequeueCell(indexPath) as PromoCell
+            let cell = tableView.dequeueCell(indexPath) as PromoTableViewCell
             cell.update(product)
             return cell
         } else {
-            let cell = tableView.dequeueCell(indexPath) as ProductCell
+            let cell = tableView.dequeueCell(indexPath) as ProductTableViewCell
             cell.update(product)
             return cell
         }

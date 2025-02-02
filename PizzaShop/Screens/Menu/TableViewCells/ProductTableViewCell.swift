@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProductCell: UITableViewCell {
+final class ProductTableViewCell: UITableViewCell {
     
     static let reuseId = "ProductCell"
 
@@ -81,7 +81,7 @@ final class ProductCell: UITableViewCell {
     
 }
 
-extension ProductCell {
+extension ProductTableViewCell {
     
     struct Layout {
         static let offset: CGFloat = 10
