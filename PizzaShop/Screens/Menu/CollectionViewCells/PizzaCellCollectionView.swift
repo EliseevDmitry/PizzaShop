@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class PizzaCell: UICollectionViewCell {
+final class PizzaCellCollectionView: UICollectionViewCell {
     static let reuseId = "PizzaCell"
     
     private var containerView: UIView = {
@@ -33,7 +33,7 @@ final class PizzaCell: UICollectionViewCell {
 }
 
 
-extension PizzaCell {
+extension PizzaCellCollectionView {
     
     private func setupViews(){
         [containerView].forEach {
@@ -43,8 +43,6 @@ extension PizzaCell {
     
     private func setupConstraints() {
         containerView.snp.makeConstraints { make in
-//            make.left.right.equalTo(contentView).offset(20)
-//            make.top.bottom.equalTo(contentView).inset(5)
             make.left.top.right.bottom.equalTo(contentView)
         }
     }

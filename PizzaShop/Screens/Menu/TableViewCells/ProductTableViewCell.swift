@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProductCell: UITableViewCell {
+final class ProductTableViewCell: UITableViewCell {
     
     static let reuseId = "ProductCell"
 
@@ -81,7 +81,7 @@ final class ProductCell: UITableViewCell {
     
 }
 
-extension ProductCell {
+extension ProductTableViewCell {
     
     struct Layout {
         static let offset: CGFloat = 10
@@ -112,8 +112,10 @@ extension ProductCell {
             make.left.equalTo(containerView).offset(Layout.offset)
             make.top.equalTo(containerView).inset(0)
             make.bottom.equalTo(containerView).inset(0).priority(.low) //вот эта история мешала
+            
             make.width.equalTo(Layout.screenScale * Screen.width)
             make.height.equalTo(productImageView.snp.width)
+            
             make.height.equalTo(containerView.snp.width).priority(.low)
         }
         

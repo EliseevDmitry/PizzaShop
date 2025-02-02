@@ -9,12 +9,11 @@ import UIKit
 
 
 extension UIView {
+    
     enum ShadowGeometry: CGFloat {
         case radius = 10.0
     }
-    
-    
-    
+
     func addCustomShadow() {
         //create custom path
         let path = UIBezierPath()
@@ -33,4 +32,5 @@ extension UIView {
         shapeLayer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.insertSublayer(shapeLayer, at: 0)
     }
+    
 }
