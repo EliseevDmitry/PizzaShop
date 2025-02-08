@@ -7,13 +7,14 @@
 
 import UIKit
 import SnapKit
+import SwiftUI
 
 final class PromoTableViewCell: UITableViewCell {
     
     static let reuseId = "PromoCell"
     private var hasShadow = false
-
-//MARK: - UI ELEMENTS
+    
+    //MARK: - UI ELEMENTS
     
     private lazy var roundedView: UIView = {
         $0.backgroundColor = .clear
@@ -61,7 +62,7 @@ final class PromoTableViewCell: UITableViewCell {
         return $0
     }(UIImageView())
     
-//MARK: - LIFE CYCLE FUNCTIONS
+    //MARK: - LIFE CYCLE FUNCTIONS
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -88,7 +89,7 @@ final class PromoTableViewCell: UITableViewCell {
     }
     
     
-//MARK: - FUNCTIONS
+    //MARK: - FUNCTIONS
     
     func update(_ product: Product) {
         nameLabel.text = product.name
@@ -133,7 +134,7 @@ extension PromoTableViewCell {
             make.left.right.equalTo(contentView).inset(PromoLayout.horisontal)
             make.top.bottom.equalTo(contentView).inset(PromoLayout.vertical)
         }
-
+        
         verticalStackView.snp.makeConstraints { make in
             make.top.left.bottom.right.equalTo(roundedView).inset(PromoLayout.offset)
         }
@@ -143,5 +144,26 @@ extension PromoTableViewCell {
             make.height.equalTo(productImageView.snp.width)
         }
     }
-  
+    
+}
+
+
+//MARK: - Preview
+
+struct PromoTableViewCellPreviews: PreviewProvider {
+    
+    struct PromoTableViewCellContainer: UIViewRepresentable {
+        func makeUIView(context: Context) -> some UIView {
+            PromoTableViewCell()
+        }
+        func updateUIView(_ uiView: UIViewType, context: Context) { }
+    }
+    
+    static var previews: some View {
+        PromoTableViewCellContainer()
+            .previewLayout(.sizeThatFits)
+            .frame(width: 300, height: 500)
+            .padding()
+    }
+    
 }

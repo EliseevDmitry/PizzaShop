@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SwiftUI
 
 class DetailViewController: UIViewController {
    
@@ -75,5 +76,21 @@ extension DetailViewController {
             make.height.equalTo(productImageView.snp.width)
         }
         
+    }
+}
+
+//MARK: - Preview
+
+struct DetailViewControllerPreviews: PreviewProvider {
+    
+    struct DetailViewControllerContainer: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> some UIViewController {
+            UINavigationController(rootViewController:  DetailViewController())
+        }
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
+    }
+    
+    static var previews: some View {
+        DetailViewControllerContainer().ignoresSafeArea()
     }
 }
