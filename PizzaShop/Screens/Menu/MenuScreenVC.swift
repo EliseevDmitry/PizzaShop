@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class MenuScreenVC: UIViewController {
     
@@ -137,6 +138,19 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
  
 }
 
-    
-    
+//MARK: - Preview
 
+struct MenuScreenVCPreviews: PreviewProvider {
+    
+    struct MenuScreenVCContainer: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> some UIViewController {
+            UINavigationController(rootViewController:  MenuScreenVC())
+        }
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
+    }
+    
+    static var previews: some View {
+        MenuScreenVCContainer().ignoresSafeArea()
+    }
+    
+}
