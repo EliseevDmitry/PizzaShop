@@ -9,44 +9,93 @@ import UIKit
 import SnapKit
 import SwiftUI
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController  {
    
-    private lazy var verticalStackView: UIStackView = {
-        $0.axis = .vertical
-        $0.spacing = 15
-        $0.alignment = .fill
-        $0.distribution = .fill
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        $0.isLayoutMarginsRelativeArrangement = true
-        return $0
-    }(UIStackView())
+    let addonsProducts = ProductsService().fetchAddonsProduct()
+
     
-    private lazy var productImageView: UIImageView = {
-        $0.image = UIImage(named: "chicken")
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
-        return $0
-    }(UIImageView())
+
     
-    private lazy var captionLabel: UILabel = {
-        $0.text = "Гавайская"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
-        return $0
-    }(UILabel())
+    private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
+        
+        // Создание элемента для productImageView
+                let imageItem = NSCollectionLayoutItem(
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .absolute(Screen.width),
+                        heightDimension: .absolute(Screen.width)
+                    )
+                )
+                imageItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                
+                // Создание группы для изображения
+                let imageGroup = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .absolute(Screen.width),
+                        heightDimension: .absolute(Screen.width)
+                    ),
+                    subitems: [imageItem]
+                )
+                
+  
+                let imageSection = NSCollectionLayoutSection(group: imageGroup)
+                imageSection.orthogonalScrollingBehavior = .none
+        
+        
+        
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(0.33),
+                heightDimension: .fractionalHeight(1.0)
+            )
+        )
+        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        
+        // Группа с тремя элементами в ряду
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(200)
+            ),
+            subitems: [item, item, item] // 3 элемента в ряду
+        )
+        
+        // Секция
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        // Вертикальный скролл
+        section.orthogonalScrollingBehavior = .none
+        
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+                    if sectionIndex == 0 {
+                        return imageSection  // Первая секция для изображения
+                    } else {
+                        return section  // Вторая секция для других элементов
+                    }
+                }
+        
+        return layout
+    }()
     
-    private lazy var detailLabel: UILabel = {
-        $0.text = "Гавайская"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
+    private lazy var addonsProductCollectionView: UICollectionView = {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.registerCell(AddonsProductCollectionViewCell.self)
+        $0.registerCell(ImageCellCollectionView.self)
+        $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = .brown
+        
         return $0
-    }(UILabel())
-    
+    }(UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout))
+
     private lazy var zeroView: UIView = {
         return $0
     }(UIView())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .red.withAlphaComponent(0.1)
+        
         setupViews()
         setupConstraints()
     }
@@ -57,40 +106,77 @@ class DetailViewController: UIViewController {
 extension DetailViewController {
 
     private func setupViews() {
-        [verticalStackView].forEach{
+        [addonsProductCollectionView].forEach{
             view.addSubview($0)
-        }
-        
-        [productImageView, captionLabel, detailLabel, zeroView].forEach{
-            verticalStackView.addArrangedSubview($0)
         }
     }
     
     private func setupConstraints(){
-        let safeArea = view.safeAreaLayoutGuide
-        verticalStackView.snp.makeConstraints { make in
-            make.top.right.bottom.left.equalTo(safeArea)
-        }
-        productImageView.snp.makeConstraints { make in
-            make.width.equalTo(Screen.width * 0.7)
-            make.height.equalTo(productImageView.snp.width)
-        }
         
+        addonsProductCollectionView.snp.makeConstraints { make in
+            make.top.right.bottom.left.equalToSuperview()
+        }
+
     }
+    
 }
 
 //MARK: - Preview
 
 struct DetailViewControllerPreviews: PreviewProvider {
     
+    // Структура для передачи mock-данных в Preview
     struct DetailViewControllerContainer: UIViewControllerRepresentable {
+        
+        var addonsProducts: [Addons] = [
+            Addons(name: "Сырный бортик", price: 179, image: "cheesecrust"),
+            Addons(name: "Пряная говядина", price: 119, image: "spicybeef"),
+            Addons(name: "Моцарелла", price: 79, image: "mozzarella")
+        ]
+        
         func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController:  DetailViewController())
+            let viewController = DetailViewController()
+            return UINavigationController(rootViewController: viewController)
         }
+        
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
     }
     
     static var previews: some View {
-        DetailViewControllerContainer().ignoresSafeArea()
+        DetailViewControllerContainer()
+            .ignoresSafeArea()
     }
 }
+
+
+extension DetailViewController: UICollectionViewDelegate , UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+                return 1 // Первая секция для изображения
+            } else {
+                return addonsProducts.count // Вторая секция для других элементов
+            }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        if indexPath.section == 0 {
+                    // В первой секции, возвращаем пустую ячейку или настройте для изображения
+            let cell = collectionView.dequeueCell(indexPath) as ImageCellCollectionView
+                    return cell
+                } else  {
+                    // Для других секций
+                    let cell = collectionView.dequeueCell(indexPath) as AddonsProductCollectionViewCell
+                    //print(indexPath.row)
+                    cell.updateData(item: addonsProducts[indexPath.row])
+                    return cell
+                }
+    }
+    
+}
+
+

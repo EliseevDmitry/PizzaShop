@@ -19,3 +19,9 @@ struct Product: Codable {
     let image: String
     let isPromo: Bool
 }
+
+struct Addons: Codable {
+    let name: String
+    let price: Int
+    let image: String
+}
