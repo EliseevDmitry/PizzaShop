@@ -12,6 +12,8 @@ import SwiftUI
 class AddonsProductCollectionViewCell: UICollectionViewCell {
     static let reuseId = "addonsCell"
     
+    //MARK: - LAZY VAR
+    
     private var containerView: UIView = {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
         $0.applyShadow(cornerRadius: 10)
@@ -45,22 +47,29 @@ class AddonsProductCollectionViewCell: UICollectionViewCell {
         return $0
     }(UILabel())
 
+    //MARK: - FUNCTIONS OF THE LIFE CYCLE
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //нет проверок и надо "let rubleSymbol = "\u{20BD}"" - сделать глобально
     func updateData(item: Addons){
         addonsProductImageView.image = UIImage(named: item.image)
         nameLabel.text = item.name
         let rubleSymbol = "\u{20BD}"
         priceLabel.text = "\(item.price.description) \(rubleSymbol)"
     }
+    
 }
+
+//MARK: - EXTENSION
 
 extension AddonsProductCollectionViewCell {
     
@@ -94,20 +103,14 @@ extension AddonsProductCollectionViewCell {
     
 }
 
-    //MARK: - Preview
+    //MARK: - PREVIEW
 
 struct AddonsProductCollectionViewCellPreviews: PreviewProvider {
 
     struct AddonsProductCollectionViewCellContainer: UIViewRepresentable {
-        
         func makeUIView(context: Context) -> UIView {
-            let cell = AddonsProductCollectionViewCell()
-            cell.frame = CGRect(x: 0, y: 0, width: 200, height: 300)
-            let rubleSymbol = "\u{20BD}"
-            //cell.updateLabel(nameItem: "40 \(rubleSymbol)")
-            return cell
+            return AddonsProductCollectionViewCell()
         }
-        
         func updateUIView(_ uiView: UIView, context: Context) { }
     }
     
@@ -117,6 +120,7 @@ struct AddonsProductCollectionViewCellPreviews: PreviewProvider {
             .frame(width: 200, height: 300)
             .padding()
     }
+    
 }
 
 

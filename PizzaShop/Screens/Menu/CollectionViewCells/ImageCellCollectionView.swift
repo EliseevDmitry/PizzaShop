@@ -12,13 +12,16 @@ import SwiftUI
 class ImageCellCollectionView: UICollectionViewCell {
     static let reuseId = "imageCell"
 
+    //MARK: - LAZY VAR
+    
     private lazy var productImageView: UIImageView = {
         $0.image = UIImage(named: "chicken")
         $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
         return $0
     }(UIImageView())
 
+    //MARK: - FUNCTIONS OF THE LIFE CYCLE
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -31,6 +34,8 @@ class ImageCellCollectionView: UICollectionViewCell {
 
 }
 
+//MARK: - EXTENSION
+
 extension ImageCellCollectionView {
     
     private func setupViews(){
@@ -41,22 +46,20 @@ extension ImageCellCollectionView {
     
     private func setupConstraints() {
         productImageView.snp.makeConstraints { make in
-            make.left.top.right.bottom.equalTo(contentView)
+            
+            make.left.top.right.bottom.equalToSuperview()
         }
     }
     
 }
 
-    //MARK: - Preview
+//MARK: - PREVIEW
 
 struct ImageCellCollectionViewPreviews: PreviewProvider {
 
     struct ImageCellCollectionViewContainer: UIViewRepresentable {
-        
         func makeUIView(context: Context) -> UIView {
-            let cell = ImageCellCollectionView()
-            cell.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-            return cell
+            ImageCellCollectionView()
         }
         
         func updateUIView(_ uiView: UIView, context: Context) { }
@@ -65,9 +68,10 @@ struct ImageCellCollectionViewPreviews: PreviewProvider {
     static var previews: some View {
         ImageCellCollectionViewContainer()
             .previewLayout(.sizeThatFits)
-            .frame(width: 300, height: 300)
+            .frame(width: Screen.width, height: Screen.width)
             .padding()
     }
+    
 }
 
 
