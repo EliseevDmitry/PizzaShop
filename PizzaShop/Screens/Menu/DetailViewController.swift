@@ -12,7 +12,17 @@ import SwiftUI
 class DetailViewController: UIViewController  {
     
     let addonsProducts = ProductsService().fetchAddonsProduct()
+    let detail: String
     
+    init(detail: String) {
+        self.detail = detail
+        print(detail)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     //MARK: - LAZY VAR
     
     private lazy var addonsProductCollectionView: UICollectionView = {
@@ -26,7 +36,7 @@ class DetailViewController: UIViewController  {
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout))
     
-    private var addingProductButton: UIButton = {
+    private lazy var addingProductButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         configuration.baseBackgroundColor = .orange
         configuration.baseForegroundColor = UIColor.white
@@ -216,7 +226,7 @@ struct DetailViewControllerPreviews: PreviewProvider {
     
     struct DetailViewControllerContainer: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
-            let viewController = DetailViewController()
+            let viewController = DetailViewController(detail: "")
             return UINavigationController(rootViewController: viewController)
         }
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }

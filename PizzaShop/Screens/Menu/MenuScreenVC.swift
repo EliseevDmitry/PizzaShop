@@ -135,6 +135,14 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 44 : 0
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let products = catProducts.flatMap{$0.products}
+        let product = products[indexPath.row]
+        let detailVC = DetailViewController(detail: product.detail)
+        detailVC.modalPresentationStyle = .automatic
+            present(detailVC, animated: true)
+    }
  
 }
 
