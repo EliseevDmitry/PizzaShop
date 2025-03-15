@@ -33,6 +33,7 @@ final class BasketViewController: UIViewController {
         configuration.buttonSize = .large
         configuration.title = "Ввести промокод"
         $0.configuration = configuration
+        $0.addTarget(self, action: #selector(applyPromoTapped), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -174,6 +175,7 @@ final class BasketViewController: UIViewController {
         let rubleSymbol = "\u{20BD}"
         configuration.title = "Оформить заказ на 799 \(rubleSymbol)"
         $0.configuration = configuration
+        $0.addTarget(self, action: #selector(checkoutTapped), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -260,8 +262,16 @@ extension BasketViewController {
  
     }
     
+    @objc private func applyPromoTapped(){
+        print("Нажата кнопка ввода промокода!")
+    }
+    
     @objc private func infoButtonTapped() {
         print("Нажата кнопка информации!")
+    }
+    
+    @objc private func checkoutTapped() {
+        print("Нажата кнопка оформления заказа!")
     }
     
 }
