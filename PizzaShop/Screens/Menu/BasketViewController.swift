@@ -25,6 +25,32 @@ final class BasketViewController: UIViewController {
         return $0
     }(UITableView())
     
+    private lazy var addToProductsLabel: UILabel = {
+        $0.text = "Добавить к заказу?"
+        $0.font = UIFont.boldSystemFont(ofSize: 25)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.textColor = .white
+        return $0
+    }(UILabel())
+    
+    private let layout: UICollectionViewFlowLayout = {
+        $0.scrollDirection = .horizontal
+        $0.minimumLineSpacing = 10
+        return $0
+    }(UICollectionViewFlowLayout())
+    
+    private lazy var addToProductsCV: UICollectionView = {
+        $0.backgroundColor = .black
+        $0.delegate = self
+        $0.dataSource = self
+        $0.showsHorizontalScrollIndicator = false
+        $0.registerCell(AddToProductCell.self)
+        return $0
+    }(UICollectionView(frame: .zero, collectionViewLayout: layout))
+    
     private lazy var promocodeButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         configuration.baseBackgroundColor = .darkGray
@@ -199,7 +225,7 @@ extension BasketViewController {
             view.addSubview($0)
         }
         
-        [promocodeButton, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground, emptyView].forEach {
+        [addToProductsLabel, addToProductsCV, promocodeButton, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground, emptyView].forEach {
             verticalStackView.addArrangedSubview($0)
         }
         
@@ -227,9 +253,15 @@ extension BasketViewController {
     }
     
     private func setupConstraints(){
-        //let safeArea = view.safeAreaLayoutGuide
+        let safeArea = view.safeAreaLayoutGuide
         verticalStackView.snp.makeConstraints { make in
-            make.top.right.bottom.left.equalToSuperview()
+            make.top.right.bottom.left.equalTo(safeArea)
+            //make.bottom.lessThanOrEqualToSuperview()
+        }
+        
+        addToProductsCV.snp.makeConstraints { make in
+           make.height.equalTo(150)
+            make.left.right.equalTo(verticalStackView)
         }
         
         promocodeButton.snp.makeConstraints { make in
@@ -285,6 +317,31 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
         UITableViewCell()
     }
 
+}
+
+extension BasketViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // Получаем высоту коллекции, чтобы задать её в itemSize
+        let height = collectionView.bounds.height // высота коллекции
+        let width = 100.0 // или вычислите ширину в зависимости от ваших требований
+
+        return CGSize(width: width, height: height)
+    }
+}
+
+extension BasketViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(collectionView)
+        print(indexPath)
+        let cell = collectionView.dequeueCell(indexPath) as AddToProductCell
+        cell.updateData(item: Addons(name: "Тест", price: 150, image: "mozzarella"))
+        return cell
+    }
+ 
 }
 
 struct BasketPreview: UIViewControllerRepresentable {
