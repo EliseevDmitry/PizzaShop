@@ -52,7 +52,8 @@ final class ProductTableViewCell: UITableViewCell {
         configuration.baseForegroundColor = UIColor.brown
         configuration.cornerStyle = .capsule
         configuration.buttonSize = .medium
-        configuration.title = "от 469 руб"
+        let rubleSymbol = "\u{20BD}"
+        configuration.title = "от 469 руб \(rubleSymbol)"
         $0.configuration = configuration
         return $0
     }(UIButton())

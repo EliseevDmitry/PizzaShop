@@ -11,18 +11,50 @@ import SwiftUI
 final class BasketTableViewCell: UITableViewCell {
     
     static let reuseId = "BasketCell"
+    
+    var totalPrice: Int = 469 {
+        didSet {
+            updatePriceLabel()
+        }
+    }
 
     private lazy var containerView: UIView = {
         $0.backgroundColor = .gray
         return $0
     }(UIView())
     
+    
     private lazy var verticalStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 15
         $0.alignment = .leading
         $0.distribution = .equalSpacing
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 0)
+        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 10)
+        $0.isLayoutMarginsRelativeArrangement = true
+        return $0
+    }(UIStackView())
+    
+    private lazy var horizontalStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 0
+        $0.alignment = .leading
+        $0.distribution = .equalSpacing
+        $0.isLayoutMarginsRelativeArrangement = true
+        return $0
+    }(UIStackView())
+    
+    private lazy var productImageView: UIImageView = {
+        $0.image = UIImage(named: "hawaii")
+        $0.contentMode = .scaleAspectFill
+        return $0
+    }(UIImageView())
+    
+    private lazy var verticalDescriptionStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 15
+        $0.alignment = .leading
+        $0.distribution = .equalSpacing
+        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 10)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView())
@@ -33,7 +65,8 @@ final class BasketTableViewCell: UITableViewCell {
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
         $0.numberOfLines = 2
-        $0.textAlignment = .center
+        $0.textAlignment = .left
+        $0.textColor = .white
         return $0
     }(UILabel())
     
@@ -42,22 +75,44 @@ final class BasketTableViewCell: UITableViewCell {
         $0.textColor = .darkGray
         $0.numberOfLines = 0
         $0.font = UIFont.boldSystemFont(ofSize: 15)
+        $0.textColor = .white
         return $0
     }(UILabel())
     
+    private lazy var priceHorizontalStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alignment = .center
+        $0.distribution = .fill
+        $0.isLayoutMarginsRelativeArrangement = true
+        return $0
+    }(UIStackView())
+    
     private lazy var priceLabel: UILabel = {
-        $0.text = "469"
+        let rubleSymbol = "\u{20BD}"
+        $0.text = "\(totalPrice) \(rubleSymbol)"
         $0.textColor = .black
         $0.numberOfLines = 0
+        $0.font = UIFont.boldSystemFont(ofSize: 22)
+        $0.textColor = .white
+        return $0
+    }(UILabel())
+    
+    private lazy var titleLabel: UILabel = {
+        $0.text = "Изменить"
+        $0.textAlignment = .right
+        $0.textColor = .orange
         $0.font = UIFont.boldSystemFont(ofSize: 15)
         return $0
     }(UILabel())
     
-    private lazy var productImageView: UIImageView = {
-        $0.image = UIImage(named: "hawaii")
-        $0.contentMode = .scaleAspectFill
-        return $0
-    }(UIImageView())
+    private lazy var stepper: StepperView = {
+        $0.onValueChanged = { [weak self] value in
+                self?.totalPrice = value * 469 // Обновляем цену на основе количества
+            }
+            return $0
+    }(StepperView())
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -80,48 +135,61 @@ final class BasketTableViewCell: UITableViewCell {
 
 extension BasketTableViewCell {
     
-    struct Layout {
-        static let offset: CGFloat = 10
-        static let horisontal: CGFloat = 16
-        static let vertical: CGFloat = 8
-        static let screenScale: CGFloat = 0.4
-    }
+   
     
     private func setupViews(){
         [containerView].forEach {
             contentView.addSubview($0)
         }
-        [productImageView, verticalStackView].forEach {
+        [verticalStackView].forEach {
             containerView.addSubview($0)
         }
-        [nameLabel, detailLabel].forEach {
+        [horizontalStackView, priceHorizontalStackView].forEach {
             verticalStackView.addArrangedSubview($0)
+        }
+        [productImageView, verticalDescriptionStackView].forEach {
+            horizontalStackView.addArrangedSubview($0)
+        }
+        [nameLabel, detailLabel].forEach {
+            verticalDescriptionStackView.addArrangedSubview($0)
+        }
+        [priceLabel, titleLabel, stepper].forEach {
+            priceHorizontalStackView.addArrangedSubview($0)
         }
     }
     
     private func setupConstraints() {
         containerView.snp.makeConstraints { make in
-            make.left.right.equalTo(contentView).inset(Layout.horisontal)
-            make.top.bottom.equalTo(contentView).inset(Layout.vertical)
+            make.left.right.equalTo(contentView)
+            make.top.equalTo(contentView)
         }
-        
-        productImageView.snp.makeConstraints { make in
-            make.left.equalTo(containerView).offset(Layout.offset)
-            make.top.equalTo(containerView).inset(0)
-            make.bottom.equalTo(containerView).inset(0).priority(.low) //вот эта история мешала
-            
-            make.width.equalTo(Layout.screenScale * Screen.width)
-            make.height.equalTo(productImageView.snp.width)
-            
-            make.height.equalTo(containerView.snp.width).priority(.low)
-        }
-        
         verticalStackView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(containerView)
-            make.right.equalTo(containerView).inset(Layout.offset)
-            make.left.equalTo(productImageView.snp.right).offset(Layout.offset)
-            make.height.equalTo(containerView.snp.height).priority(.high)
+            make.leading.top.trailing.bottom.equalTo(containerView)
+            
         }
+        productImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(Screen.width/3)
+        }
+        
+        priceLabel.snp.makeConstraints { make in
+            make.top.equalTo(productImageView.snp.bottom).offset(10)
+        }
+        
+        priceHorizontalStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(verticalStackView.layoutMargins)
+        }
+        
+        stepper.snp.makeConstraints { make in
+            make.centerY.equalTo(priceHorizontalStackView)
+            make.height.equalTo(contentView).multipliedBy(0.13)
+            make.width.equalTo(contentView).multipliedBy(0.25)
+        }
+
+    }
+    
+    private func updatePriceLabel() {
+        let rubleSymbol = "\u{20BD}"
+        priceLabel.text = "\(totalPrice) \(rubleSymbol)"
     }
 
 }
