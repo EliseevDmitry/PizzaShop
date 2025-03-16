@@ -1,20 +1,19 @@
 //
-//  ProductCell.swift
+//  BasketTableViewCell.swift
 //  PizzaShop
 //
-//  Created by Dmitriy Eliseev on 18.11.2024.
+//  Created by Dmitriy Eliseev on 16.03.2025.
 //
 
 import UIKit
 import SwiftUI
 
-final class ProductTableViewCell: UITableViewCell {
+final class BasketTableViewCell: UITableViewCell {
     
-    static let reuseId = "ProductCell"
+    static let reuseId = "BasketCell"
 
     private lazy var containerView: UIView = {
-        $0.backgroundColor = .white
-        $0.applyShadow(cornerRadius: 10)
+        $0.backgroundColor = .gray
         return $0
     }(UIView())
     
@@ -46,16 +45,13 @@ final class ProductTableViewCell: UITableViewCell {
         return $0
     }(UILabel())
     
-    private var priceButton: UIButton = {
-        var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = .orange.withAlphaComponent(0.1)
-        configuration.baseForegroundColor = UIColor.brown
-        configuration.cornerStyle = .capsule
-        configuration.buttonSize = .medium
-        configuration.title = "от 469 руб"
-        $0.configuration = configuration
+    private lazy var priceLabel: UILabel = {
+        $0.text = "469"
+        $0.textColor = .black
+        $0.numberOfLines = 0
+        $0.font = UIFont.boldSystemFont(ofSize: 15)
         return $0
-    }(UIButton())
+    }(UILabel())
     
     private lazy var productImageView: UIImageView = {
         $0.image = UIImage(named: "hawaii")
@@ -76,13 +72,13 @@ final class ProductTableViewCell: UITableViewCell {
     func update(_ product: Product) {
         nameLabel.text = product.name
         detailLabel.text = product.detail
-        priceButton.setTitle("\(product.price) р", for: .normal)
+        //priceButton.setTitle("\(product.price) р", for: .normal)
         productImageView.image = UIImage(named: product.image)
     }
     
 }
 
-extension ProductTableViewCell {
+extension BasketTableViewCell {
     
     struct Layout {
         static let offset: CGFloat = 10
@@ -98,7 +94,7 @@ extension ProductTableViewCell {
         [productImageView, verticalStackView].forEach {
             containerView.addSubview($0)
         }
-        [nameLabel, detailLabel, priceButton].forEach {
+        [nameLabel, detailLabel].forEach {
             verticalStackView.addArrangedSubview($0)
         }
     }
@@ -133,17 +129,15 @@ extension ProductTableViewCell {
 
 //MARK: - PREVIEW
 
-import SwiftUI
+struct BasketTableViewCellPreviews: PreviewProvider {
 
-struct ProductTableViewCellPreviews: PreviewProvider {
-
-    struct ProductTableViewCellContainer: UIViewRepresentable {
+    struct BasketTableViewCellContainer: UIViewRepresentable {
         
         func makeUIView(context: Context) -> UIView {
-            let cell = ProductTableViewCell()
+            let cell = BasketTableViewCell()
             // Создаём фиктивный продукт для обновления
             let product = Product(name: "Гавайская", detail: "Тесто, Цыпленок, моцарелла, томатный соус", price: 469, image: "chicken", isPromo: false)
-            cell.update(product)
+            cell.update(product) // Вызываем метод для обновления данных ячейки
             return cell
         }
         
@@ -153,7 +147,7 @@ struct ProductTableViewCellPreviews: PreviewProvider {
     }
 
     static var previews: some View {
-        ProductTableViewCellContainer()
+        BasketTableViewCellContainer()
             .previewLayout(.sizeThatFits)
             .frame(width: Screen.width, height: 300)
             .padding()
