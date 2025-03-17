@@ -12,6 +12,13 @@ import SwiftUI
 class StepperView: UIView {
     
     var onValueChanged: ((Int) -> Void)?
+    
+    var value: Int = 1 {
+            didSet {
+                valueLabel.text = "\(value)"
+                onValueChanged?(value)
+            }
+        }
 
     private lazy var horizontalStackView: UIStackView = {
         $0.axis = .horizontal
@@ -44,12 +51,7 @@ class StepperView: UIView {
         return $0
     }(UILabel())
     
-    var value: Int = 1 {
-            didSet {
-                valueLabel.text = "\(value)"
-                onValueChanged?(value)
-            }
-        }
+   
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -11,8 +11,9 @@ import SwiftUI
 final class BasketTableViewCell: UITableViewCell {
     
     static let reuseId = "BasketCell"
+    private var price = Int()
     
-    var totalPrice: Int = 469 {
+    var totalPrice: Int = 0 {
         didSet {
             updatePriceLabel()
         }
@@ -22,9 +23,8 @@ final class BasketTableViewCell: UITableViewCell {
         $0.backgroundColor = .gray
         return $0
     }(UIView())
-    private lazy var emptyView: UIView = {
-        return $0
-    }(UIView())
+    
+
     
     private lazy var verticalStackView: UIStackView = {
         $0.axis = .vertical
@@ -104,13 +104,14 @@ final class BasketTableViewCell: UITableViewCell {
     
     private lazy var stepper: StepperView = {
         $0.onValueChanged = { [weak self] value in
-                self?.totalPrice = value * 469 // Обновляем цену на основе количества
+            self?.totalPrice = value * (self?.price ?? 0) // Обновляем цену на основе количества
             }
             return $0
     }(StepperView())
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .red
         setupViews()
@@ -121,13 +122,16 @@ final class BasketTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
-
     func update(_ product: Product) {
         nameLabel.text = product.name
         detailLabel.text = product.detail
-        //priceButton.setTitle("\(product.price) р", for: .normal)
+        price = product.price
+        totalPrice = price
         productImageView.image = UIImage(named: product.image)
+    }
+    
+    func getValue() -> Int {
+        stepper.value
     }
     
 }

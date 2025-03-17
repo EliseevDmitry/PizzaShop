@@ -11,6 +11,17 @@ import SnapKit
 
 final class BasketViewController: UIViewController {
     
+    let products: [Product]
+    
+    init(product: [Product]) {
+        self.products = product
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private lazy var scrollView: UIScrollView = {
         $0.backgroundColor = .black
         return $0
@@ -46,8 +57,21 @@ final class BasketViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         $0.setTitle("Закрыть", for: .normal)
         $0.setTitleColor(.orange, for: .normal)
+        $0.addTarget(nil, action: #selector(testBtn), for: .touchUpInside)
         return $0
     }(UIButton())
+    
+    private lazy var totalLabel: UILabel = {
+        let rubleSymbol = "\u{20BD}"
+        $0.text = "3 товара на 1398 \(rubleSymbol)"
+        $0.font = UIFont.boldSystemFont(ofSize: 25)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.textColor = .white
+        return $0
+    }(UILabel())
     
     
     private lazy var tableView: UITableView = {
@@ -254,6 +278,8 @@ final class BasketViewController: UIViewController {
         tableView.snp.updateConstraints { make in
             make.height.equalTo((tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * 4)
         }
+        
+       
     }
     
     
@@ -274,7 +300,7 @@ extension BasketViewController {
         }
         
         
-        [tableView, addToProductsLabel, addToProductsCV, promocodeButton, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground, emptyView].forEach {
+        [totalLabel, tableView, addToProductsLabel, addToProductsCV, promocodeButton, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground, emptyView].forEach {
             verticalStackView.addArrangedSubview($0)
         }
         
@@ -329,7 +355,10 @@ extension BasketViewController {
             make.width.equalTo(scrollView)
         }
         
-       
+        totalLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(verticalStackView).offset(16)
+            make.height.equalTo(100)
+        }
         
         tableView.snp.makeConstraints { make in
             make.height.equalTo(300)
@@ -382,16 +411,35 @@ extension BasketViewController {
     @objc private func checkoutTapped() {
         print("Нажата кнопка оформления заказа!")
     }
+    //--------------------------------------
+    @objc private func testBtn() {
+        let test = getAllPrice()
+        let rubleSymbol = "\u{20BD}"
+        totalLabel.text = "\(test.0) товара на сумму \(test.1) \(rubleSymbol)"
+    }
+    //общее число продуктов
+    private func getAllPrice() -> (Int, Int) {
+        var countProducts = Int()
+        var totalPrise = Int()
+        for item in (0...products.count - 1) {
+            let cell =  tableView.cellForRow(at: IndexPath(row: item, section: 0)) as! BasketTableViewCell
+            let countProduct = cell.getValue()
+            countProducts += countProduct
+            totalPrise += (products[item].price * countProduct)
+        }
+        return (countProducts, totalPrise)
+    }
     
 }
 
 extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(indexPath) as BasketTableViewCell
+        cell.update(products[indexPath.row])
         return cell
     }
 
@@ -424,7 +472,7 @@ extension BasketViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 struct BasketPreview: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> BasketViewController {
-        return BasketViewController()
+        return BasketViewController(product: [])
     }
     
     func updateUIViewController(_ uiViewController: BasketViewController, context: Context) {}
