@@ -7,6 +7,35 @@
 
 import UIKit
 
+struct Test {
+    static let product: [Product] = [
+        Product(
+            name: "Ципленок табака",
+            detail: "Помидоры, шпинат, сыр",
+            price: 234,
+            image: "chicken",
+            isPromo: false),
+        Product(
+            name: "Дьявольская",
+            detail: "Помидоры, шпинат, сыр, ветчина",
+            price: 234,
+            image: "diablo",
+            isPromo: false),
+        Product(
+            name: "Ципленок табака",
+            detail: "Помидоры, шпинат, сыр",
+            price: 576,
+            image: "chicken",
+            isPromo: false),
+        Product(
+            name: "Пеперони",
+            detail: "Помидоры, шпинат, сыр, колбаски",
+            price: 100,
+            image: "grilled",
+            isPromo: false),
+    ]
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
@@ -15,36 +44,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        let product: [Product] = [
-            Product(
-                name: "Ципленок табака",
-                detail: "Помидоры, шпинат, сыр",
-                price: 234,
-                image: "chicken",
-                isPromo: false),
-            Product(
-                name: "Дьявольская",
-                detail: "Помидоры, шпинат, сыр, ветчина",
-                price: 234,
-                image: "diablo",
-                isPromo: false),
-            Product(
-                name: "Ципленок табака",
-                detail: "Помидоры, шпинат, сыр",
-                price: 576,
-                image: "chicken",
-                isPromo: false),
-            Product(
-                name: "Пеперони",
-                detail: "Помидоры, шпинат, сыр, колбаски",
-                price: 100,
-                image: "grilled",
-                isPromo: false),
-        ]
+        
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow.init(windowScene: scene)
-        window?.rootViewController = BasketViewController(product: product)//MenuScreenVC()//DetailViewController()//MenuScreenVC() //
+        window?.rootViewController = BasketViewController(product: Test.product)//MenuScreenVC()//DetailViewController()//MenuScreenVC() //
         window?.makeKeyAndVisible()
     }
 

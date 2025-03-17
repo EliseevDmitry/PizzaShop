@@ -20,7 +20,7 @@ final class BasketTableViewCell: UITableViewCell {
     }
 
     private lazy var containerView: UIView = {
-        $0.backgroundColor = .gray
+        $0.backgroundColor = .clear
         return $0
     }(UIView())
     
@@ -79,7 +79,7 @@ final class BasketTableViewCell: UITableViewCell {
         $0.spacing = 10
         $0.alignment = .center
         $0.distribution = .fill
-        $0.backgroundColor = .red
+        $0.backgroundColor = .clear
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView())
@@ -113,7 +113,7 @@ final class BasketTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .red
+        self.backgroundColor = .clear
         setupViews()
         setupConstraints()
     }
@@ -164,7 +164,7 @@ extension BasketTableViewCell {
         }
         
         productImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(Screen.width / 3)
+            make.width.height.equalTo(Screen.width / 3.5)
             make.leading.top.equalTo(containerView).offset(10)
         }
         
@@ -177,12 +177,13 @@ extension BasketTableViewCell {
             make.leading.trailing.equalTo(containerView.layoutMargins)
             make.bottom.equalTo(containerView.snp.bottom).inset(10) // Выравнивание по нижнему краю
             make.top.equalTo(productImageView.snp.bottom).offset(10) // Отступ 10pt от картинки
-            make.height.equalTo(contentView).multipliedBy(0.15)
+           // make.height.equalTo(contentView).multipliedBy(0.2)
         }
         
         stepper.snp.makeConstraints { make in
             make.centerY.equalTo(priceHorizontalStackView)
             make.width.equalTo(contentView).multipliedBy(0.25)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.2)
         }
 
     }

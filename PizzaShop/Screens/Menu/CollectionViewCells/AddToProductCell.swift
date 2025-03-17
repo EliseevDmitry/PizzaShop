@@ -35,18 +35,21 @@ class AddToProductCell: UICollectionViewCell {
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
         $0.numberOfLines = 2
-        $0.textAlignment = .center
+        $0.textAlignment = .left
         return $0
     }(UILabel())
     
-    private lazy var priceLabel: UILabel = {
+    private lazy var priceButton: UIButton = {
+        var configuration = UIButton.Configuration.filled()
+        configuration.baseBackgroundColor = .lightGray
+        configuration.baseForegroundColor = UIColor.white
+        configuration.cornerStyle = .capsule
+        configuration.buttonSize = .large
         let rubleSymbol = "\u{20BD}"
-        $0.text = "79 \(rubleSymbol)"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
-        $0.textColor = .white
-        $0.textAlignment = .center
+        configuration.title = "79 \(rubleSymbol)"
+        $0.configuration = configuration
         return $0
-    }(UILabel())
+    }(UIButton())
 
     //MARK: - FUNCTIONS OF THE LIFE CYCLE
     
@@ -65,7 +68,7 @@ class AddToProductCell: UICollectionViewCell {
         addonsProductImageView.image = UIImage(named: item.image)
         nameLabel.text = item.name
         let rubleSymbol = "\u{20BD}"
-        priceLabel.text = "\(item.price.description) \(rubleSymbol)"
+        priceButton.setTitle("\(item.price.description) \(rubleSymbol)", for: .normal)
     }
     
 }
@@ -75,7 +78,7 @@ class AddToProductCell: UICollectionViewCell {
 extension AddToProductCell {
     
     private func setupViews(){
-        [containerView, addonsProductImageView, nameLabel, priceLabel].forEach {
+        [containerView, addonsProductImageView, nameLabel, priceButton].forEach {
             contentView.addSubview($0)
         }
     }
@@ -86,21 +89,24 @@ extension AddToProductCell {
             make.top.equalTo(containerView).inset(50)
         }
         addonsProductImageView.snp.makeConstraints { make in
-            make.left.right.equalTo(containerView).inset(10)
-            make.height.equalTo(addonsProductImageView.snp.width)
+            make.centerX.equalTo(containerView)
             make.centerY.equalTo(containerView.snp.top)
+            make.top.equalTo(contentView)
+            make.height.width.equalTo(containerView.snp.width).multipliedBy(1.0 / 1.5)
+            
         }
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(addonsProductImageView.snp.bottom).offset(5).priority(.low)
+           
             make.centerX.equalTo(containerView.snp.centerX)
             make.left.right.equalTo(containerView).inset(5)
         }
         
-        priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
+        priceButton.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(10)
             make.centerX.equalTo(containerView.snp.centerX)
             make.left.right.equalTo(containerView).inset(10)
-            make.bottom.equalTo(containerView.snp.bottom).inset(10).priority(.high)
+            make.bottom.equalTo(contentView.snp.bottom).inset(10)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.15)
         }
     }
     
