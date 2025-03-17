@@ -22,29 +22,24 @@ final class BasketTableViewCell: UITableViewCell {
         $0.backgroundColor = .gray
         return $0
     }(UIView())
-    
+    private lazy var emptyView: UIView = {
+        return $0
+    }(UIView())
     
     private lazy var verticalStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 15
-        $0.alignment = .leading
-        $0.distribution = .equalSpacing
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 10)
-        $0.isLayoutMarginsRelativeArrangement = true
-        return $0
-    }(UIStackView())
-    
-    private lazy var horizontalStackView: UIStackView = {
-        $0.axis = .horizontal
         $0.spacing = 0
         $0.alignment = .leading
-        $0.distribution = .equalSpacing
+        $0.distribution = .fill
+        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView())
     
+
+    
     private lazy var productImageView: UIImageView = {
-        $0.image = UIImage(named: "hawaii")
+        $0.image = UIImage(named: "chicken")
         $0.contentMode = .scaleAspectFill
         return $0
     }(UIImageView())
@@ -84,6 +79,7 @@ final class BasketTableViewCell: UITableViewCell {
         $0.spacing = 10
         $0.alignment = .center
         $0.distribution = .fill
+        $0.backgroundColor = .red
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView())
@@ -116,6 +112,7 @@ final class BasketTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .red
         setupViews()
         setupConstraints()
     }
@@ -123,6 +120,8 @@ final class BasketTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    
 
     func update(_ product: Product) {
         nameLabel.text = product.name
@@ -141,17 +140,13 @@ extension BasketTableViewCell {
         [containerView].forEach {
             contentView.addSubview($0)
         }
-        [verticalStackView].forEach {
+
+        [productImageView, verticalStackView, priceHorizontalStackView].forEach {
             containerView.addSubview($0)
         }
-        [horizontalStackView, priceHorizontalStackView].forEach {
-            verticalStackView.addArrangedSubview($0)
-        }
-        [productImageView, verticalDescriptionStackView].forEach {
-            horizontalStackView.addArrangedSubview($0)
-        }
+       
         [nameLabel, detailLabel].forEach {
-            verticalDescriptionStackView.addArrangedSubview($0)
+            verticalStackView.addArrangedSubview($0)
         }
         [priceLabel, titleLabel, stepper].forEach {
             priceHorizontalStackView.addArrangedSubview($0)
@@ -159,29 +154,30 @@ extension BasketTableViewCell {
     }
     
     private func setupConstraints() {
+
         containerView.snp.makeConstraints { make in
-            make.left.right.equalTo(contentView)
-            make.top.equalTo(contentView)
+            make.edges.equalToSuperview()
         }
-        verticalStackView.snp.makeConstraints { make in
-            make.leading.top.trailing.bottom.equalTo(containerView)
-            
-        }
+        
         productImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(Screen.width/3)
+            make.width.height.equalTo(Screen.width / 3)
+            make.leading.top.equalTo(containerView).offset(10)
         }
         
-        priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(productImageView.snp.bottom).offset(10)
+        verticalStackView.snp.makeConstraints { make in
+            make.leading.equalTo(productImageView.snp.trailing).offset(10)
+            make.top.trailing.equalTo(containerView).inset(10)
         }
-        
+
         priceHorizontalStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(verticalStackView.layoutMargins)
+            make.leading.trailing.equalTo(containerView.layoutMargins)
+            make.bottom.equalTo(containerView.snp.bottom).inset(10) // Выравнивание по нижнему краю
+            make.top.equalTo(productImageView.snp.bottom).offset(10) // Отступ 10pt от картинки
+            make.height.equalTo(contentView).multipliedBy(0.15)
         }
         
         stepper.snp.makeConstraints { make in
             make.centerY.equalTo(priceHorizontalStackView)
-            make.height.equalTo(contentView).multipliedBy(0.13)
             make.width.equalTo(contentView).multipliedBy(0.25)
         }
 

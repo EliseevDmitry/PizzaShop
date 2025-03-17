@@ -11,17 +11,27 @@ import SnapKit
 
 final class BasketViewController: UIViewController {
     
+    private lazy var scrollView: UIScrollView = {
+        $0.backgroundColor = .green
+        //$0.bounces = false
+        return $0
+    }(UIScrollView())
+    
     private lazy var tableView: UITableView = {
         $0.dataSource = self
         $0.delegate = self
         if #available(iOS 15.0, *) {
             $0.sectionHeaderTopPadding = 0
         }
-        $0.registerCell(ProductTableViewCell.self)
+        $0.registerCell(BasketTableViewCell.self)
         $0.backgroundColor = .green
         $0.separatorStyle = .none
-        $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        $0.rowHeight = UITableView.automaticDimension
+        //$0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        $0.rowHeight = UITableView.automaticDimension  // Устанавливаем автоматическое вычисление высоты
+       $0.estimatedRowHeight = 100  // Устанавливаем приблизительную высоту для улучшения производительности
+        //$0.refreshControl = nil
+        
+        $0.bounces = false
         return $0
     }(UITableView())
     
@@ -216,16 +226,30 @@ final class BasketViewController: UIViewController {
         setupViews()
         setupConstraints()
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Обновляем высоту таблицы после того, как содержимое будет готово
+        tableView.snp.updateConstraints { make in
+            make.height.equalTo((tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * 4)
+        }
+    }
+    
     
 }
 
 extension BasketViewController {
     private func setupViews() {
-        [verticalStackView].forEach{
+        [scrollView].forEach{
             view.addSubview($0)
         }
         
-        [addToProductsLabel, addToProductsCV, promocodeButton, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground, emptyView].forEach {
+        [verticalStackView].forEach{
+            scrollView.addSubview($0)
+        }
+        
+        
+        [tableView, addToProductsLabel, addToProductsCV, promocodeButton, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground, emptyView].forEach {
             verticalStackView.addArrangedSubview($0)
         }
         
@@ -253,10 +277,18 @@ extension BasketViewController {
     }
     
     private func setupConstraints(){
+        
         let safeArea = view.safeAreaLayoutGuide
-        verticalStackView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.right.bottom.left.equalTo(safeArea)
-            //make.bottom.lessThanOrEqualToSuperview()
+        }
+        verticalStackView.snp.makeConstraints { make in
+            make.top.right.bottom.left.equalTo(scrollView)
+            make.width.equalTo(scrollView)
+        }
+        tableView.snp.makeConstraints { make in
+            make.height.equalTo(300)
+            make.left.right.equalTo(verticalStackView)
         }
         
         addToProductsCV.snp.makeConstraints { make in
@@ -310,11 +342,12 @@ extension BasketViewController {
 
 extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        let cell = tableView.dequeueCell(indexPath) as BasketTableViewCell
+        return cell
     }
 
 }
