@@ -12,10 +12,43 @@ import SnapKit
 final class BasketViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
-        $0.backgroundColor = .green
-        //$0.bounces = false
+        $0.backgroundColor = .black
         return $0
     }(UIScrollView())
+    
+    private lazy var verticalStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 15
+        $0.alignment = .leading
+        $0.distribution = .fill
+        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 12, trailing: 15)
+        $0.isLayoutMarginsRelativeArrangement = true
+        return $0
+    }(UIStackView())
+    
+    private lazy var backgroundView: UIView = {
+        $0.backgroundColor = .clear
+        return $0
+    }(UIView())
+    
+    private lazy var titleLabel: UILabel = {
+        $0.text = "Корзина"
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
+        $0.numberOfLines = 1
+        $0.textAlignment = .center
+        $0.textColor = .white
+        return $0
+    }(UILabel())
+    
+    
+    private lazy var closeButton: UIButton = {
+        $0.setTitle("Закрыть", for: .normal)
+        $0.setTitleColor(.orange, for: .normal)
+        return $0
+    }(UIButton())
+    
     
     private lazy var tableView: UITableView = {
         $0.dataSource = self
@@ -26,11 +59,7 @@ final class BasketViewController: UIViewController {
         $0.registerCell(BasketTableViewCell.self)
         $0.backgroundColor = .green
         $0.separatorStyle = .none
-        //$0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        $0.rowHeight = UITableView.automaticDimension  // Устанавливаем автоматическое вычисление высоты
-       $0.estimatedRowHeight = 100  // Устанавливаем приблизительную высоту для улучшения производительности
-        //$0.refreshControl = nil
-        
+        $0.rowHeight = UITableView.automaticDimension
         $0.bounces = false
         return $0
     }(UITableView())
@@ -73,15 +102,7 @@ final class BasketViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private lazy var verticalStackView: UIStackView = {
-        $0.axis = .vertical
-        $0.spacing = 15
-        $0.alignment = .leading
-        $0.distribution = .fill
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 12, trailing: 15)
-        $0.isLayoutMarginsRelativeArrangement = true
-        return $0
-    }(UIStackView())
+    
     
     private lazy var stackTotalView: UIStackView = {
         $0.axis = .horizontal
@@ -240,12 +261,16 @@ final class BasketViewController: UIViewController {
 
 extension BasketViewController {
     private func setupViews() {
-        [scrollView].forEach{
+        [scrollView, backgroundView].forEach{
             view.addSubview($0)
         }
         
         [verticalStackView].forEach{
             scrollView.addSubview($0)
+        }
+        
+        [titleLabel, closeButton].forEach{
+            backgroundView.addSubview($0)
         }
         
         
@@ -279,13 +304,33 @@ extension BasketViewController {
     private func setupConstraints(){
         
         let safeArea = view.safeAreaLayoutGuide
+        
+        backgroundView.snp.makeConstraints { make in
+            make.top.left.right.equalTo(safeArea)
+            make.height.equalTo(50)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.left.top.right.bottom.equalTo(backgroundView)
+            make.centerY.equalTo(backgroundView.snp.centerY)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.left.equalTo(backgroundView).offset(16)
+            make.centerY.equalTo(backgroundView.snp.centerY)
+        }
+        
         scrollView.snp.makeConstraints { make in
-            make.top.right.bottom.left.equalTo(safeArea)
+            make.right.bottom.left.equalTo(safeArea)
+            make.top.equalTo(backgroundView.snp.bottom)
         }
         verticalStackView.snp.makeConstraints { make in
             make.top.right.bottom.left.equalTo(scrollView)
             make.width.equalTo(scrollView)
         }
+        
+       
+        
         tableView.snp.makeConstraints { make in
             make.height.equalTo(300)
             make.left.right.equalTo(verticalStackView)
