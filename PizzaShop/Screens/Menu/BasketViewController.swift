@@ -465,19 +465,19 @@ extension BasketViewController: UICollectionViewDelegateFlowLayout {
 
 extension BasketViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        promo.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(indexPath) as AddToProductCell
-        cell.updateData(item: Addons(name: "Тест", price: 150, image: "mozzarella"))
+        cell.updateData(item: promo[indexPath.row])
         return cell
     }
 }
 
 struct BasketPreview: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> BasketViewController {
-        return BasketViewController(product: Test.product, promo: [])
+        return BasketViewController(product: Moc.product, promo: Moc.addProduct)
     }
     
     func updateUIViewController(_ uiViewController: BasketViewController, context: Context) {}

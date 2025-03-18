@@ -28,13 +28,23 @@ class AddToProductCell: UICollectionViewCell {
         return $0
     }(UIImageView())
     
+    private lazy var verticalStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 5
+        $0.alignment = .leading
+        $0.distribution = .fill
+        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        $0.isLayoutMarginsRelativeArrangement = true
+        return $0
+    }(UIStackView())
+    
     private lazy var nameLabel: UILabel = {
-        $0.text = "Сыры чеддер и пармезан"
+        $0.text = "Молочный коктейль со Сникерсом"
         $0.font = UIFont.boldSystemFont(ofSize: 20)
         $0.textColor = .white
         $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 4
+        $0.minimumScaleFactor = 0.2
+        $0.numberOfLines = 3
         $0.textAlignment = .left
         return $0
     }(UILabel())
@@ -44,8 +54,8 @@ class AddToProductCell: UICollectionViewCell {
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .lightGray
         $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 4
+        $0.minimumScaleFactor = 1
+        $0.numberOfLines = 1
         $0.textAlignment = .left
         return $0
     }(UILabel())
@@ -74,12 +84,10 @@ class AddToProductCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //нет проверок и надо "let rubleSymbol = "\u{20BD}"" - сделать глобально
-    func updateData(item: Addons){
+    func updateData(item: Product){
         addonsProductImageView.image = UIImage(named: item.image)
         nameLabel.text = item.name
-        let rubleSymbol = "\u{20BD}"
-        priceButton.setTitle("\(item.price.description) \(rubleSymbol)", for: .normal)
+        priceButton.setTitle("\(item.price.description) \(Constants.rubleSymbol)", for: .normal)
     }
     
 }
@@ -89,8 +97,11 @@ class AddToProductCell: UICollectionViewCell {
 extension AddToProductCell {
     
     private func setupViews(){
-        [containerView, addonsProductImageView, nameLabel, propertiesLabel, priceButton].forEach {
+        [containerView, addonsProductImageView, verticalStackView].forEach {
             contentView.addSubview($0)
+        }
+        [nameLabel, propertiesLabel, priceButton].forEach {
+            verticalStackView.addArrangedSubview($0)
         }
     }
     
@@ -99,6 +110,7 @@ extension AddToProductCell {
             make.left.right.bottom.equalTo(contentView)
             make.top.equalTo(containerView).inset(50)
         }
+        
         addonsProductImageView.snp.makeConstraints { make in
             make.centerX.equalTo(containerView)
             make.centerY.equalTo(containerView.snp.top)
@@ -106,23 +118,18 @@ extension AddToProductCell {
             make.height.width.equalTo(containerView.snp.width).multipliedBy(1.0 / 1.5)
             
         }
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(addonsProductImageView.snp.bottom).offset(10)
-            make.centerX.equalTo(containerView.snp.centerX)
-            make.left.right.equalTo(containerView).inset(5)
+        
+        verticalStackView.snp.makeConstraints { make in
+            make.top.equalTo(addonsProductImageView.snp.bottom)
+            make.leading.bottom.trailing.equalTo(containerView)
         }
         
         propertiesLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
-            make.centerX.equalTo(containerView.snp.centerX)
-            make.left.right.equalTo(containerView).inset(5)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.1)
         }
         
         priceButton.snp.makeConstraints { make in
-           // make.top.equalTo(nameLabel.snp.bottom).offset(10)
-            make.centerX.equalTo(containerView.snp.centerX)
             make.left.right.equalTo(containerView).inset(10)
-            make.bottom.equalTo(contentView.snp.bottom).inset(10)
             make.height.equalTo(contentView.snp.height).multipliedBy(0.15)
         }
     }
