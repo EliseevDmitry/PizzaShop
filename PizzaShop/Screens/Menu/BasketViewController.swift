@@ -279,7 +279,7 @@ final class BasketViewController: UIViewController {
             make.height.equalTo(
                 (
                     tableView.cellForRow(
-                        at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * 4
+                        at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * CGFloat(products.count)
             )
         }
     }
@@ -425,6 +425,9 @@ extension BasketViewController {
     @objc private func testBtn() {
         let test = getAllPrice()
         totalLabel.text = "\(test.0) товара на сумму \(test.1) \(Constants.rubleSymbol)"
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     //общее число продуктов
