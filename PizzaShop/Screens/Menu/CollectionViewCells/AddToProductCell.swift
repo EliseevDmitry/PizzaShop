@@ -33,17 +33,17 @@ class AddToProductCell: UICollectionViewCell {
         $0.spacing = 5
         $0.alignment = .leading
         $0.distribution = .fill
-        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 10, trailing: 5)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView())
     
     private lazy var nameLabel: UILabel = {
         $0.text = "Молочный коктейль со Сникерсом"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.font = UIFont.boldSystemFont(ofSize: 18)
         $0.textColor = .white
         $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.2
+        $0.minimumScaleFactor = 0.5
         $0.numberOfLines = 3
         $0.textAlignment = .left
         return $0
@@ -69,6 +69,7 @@ class AddToProductCell: UICollectionViewCell {
         let rubleSymbol = "\u{20BD}"
         configuration.title = "79 \(rubleSymbol)"
         $0.configuration = configuration
+        $0.addTarget(nil, action: #selector(addButton), for: .touchUpInside)
         return $0
     }(UIButton())
 
@@ -132,6 +133,10 @@ extension AddToProductCell {
             make.left.right.equalTo(containerView).inset(10)
             make.height.equalTo(contentView.snp.height).multipliedBy(0.15)
         }
+    }
+    
+    @objc private func addButton() {
+        print("Добавить в корзину")
     }
     
 }

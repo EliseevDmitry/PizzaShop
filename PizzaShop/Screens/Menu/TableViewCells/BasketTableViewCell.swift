@@ -12,6 +12,8 @@ final class BasketTableViewCell: UITableViewCell {
     
     static let reuseId = "BasketCell"
     private var price = Int()
+    var product: Product?
+    var onProductChanged: ((Product)->Void)?
     
     var totalPrice: Int = 0 {
         didSet {
@@ -104,8 +106,13 @@ final class BasketTableViewCell: UITableViewCell {
     
     private lazy var stepper: StepperView = {
         $0.onValueChanged = { [weak self] value in
-            self?.totalPrice = value * (self?.price ?? 0) // Обновляем цену на основе количества
+            guard let self = self else { return }
+            self.totalPrice = value * (self.price) // Обновляем цену на основе количества
+            self.product?.count = value
+            if let prod = self.product {
+                self.onProductChanged?(prod)
             }
+        }
             return $0
     }(StepperView())
     
@@ -116,6 +123,7 @@ final class BasketTableViewCell: UITableViewCell {
         self.backgroundColor = .clear
         setupViews()
         setupConstraints()
+        updatePriceLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -123,6 +131,9 @@ final class BasketTableViewCell: UITableViewCell {
     }
 
     func update(_ product: Product) {
+        self.product = product
+        
+        //переделать
         nameLabel.text = product.name
         detailLabel.text = product.detail
         price = product.price
@@ -189,8 +200,9 @@ extension BasketTableViewCell {
     }
     
     private func updatePriceLabel() {
-        let rubleSymbol = "\u{20BD}"
-        priceLabel.text = "\(totalPrice) \(rubleSymbol)"
+        guard let price = product?.price,
+              let count = product?.count else { return }
+        priceLabel.text = "\(price * count) \(Constants.rubleSymbol)"
     }
 
 }
@@ -205,7 +217,7 @@ struct BasketTableViewCellPreviews: PreviewProvider {
         func makeUIView(context: Context) -> UIView {
             let cell = BasketTableViewCell()
             // Создаём фиктивный продукт для обновления
-            let product = Product(name: "Гавайская", detail: "Тесто, Цыпленок, моцарелла, томатный соус", price: 469, image: "chicken", isPromo: false)
+            let product = Product(name: "Гавайская", detail: "Тесто, Цыпленок, моцарелла, томатный соус", price: 469, image: "chicken", isPromo: false, count: 1)
             cell.update(product) // Вызываем метод для обновления данных ячейки
             return cell
         }

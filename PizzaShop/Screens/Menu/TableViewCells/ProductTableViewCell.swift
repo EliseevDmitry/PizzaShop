@@ -11,6 +11,8 @@ import SwiftUI
 final class ProductTableViewCell: UITableViewCell {
     
     static let reuseId = "ProductCell"
+    var storage: StorageService? = nil
+    var product: Product? = nil
 
     private lazy var containerView: UIView = {
         $0.backgroundColor = .white
@@ -52,9 +54,9 @@ final class ProductTableViewCell: UITableViewCell {
         configuration.baseForegroundColor = UIColor.brown
         configuration.cornerStyle = .capsule
         configuration.buttonSize = .medium
-        let rubleSymbol = "\u{20BD}"
-        configuration.title = "от 469 руб \(rubleSymbol)"
+        configuration.title = "от 469 руб \(Constants.rubleSymbol)"
         $0.configuration = configuration
+        $0.addTarget(nil, action: #selector(addToBasket), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -74,11 +76,13 @@ final class ProductTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(_ product: Product) {
+    func update(_ product: Product, storage: StorageService) {
         nameLabel.text = product.name
         detailLabel.text = product.detail
         priceButton.setTitle("\(product.price) р", for: .normal)
         productImageView.image = UIImage(named: product.image)
+        self.storage = storage
+        self.product = product
     }
     
 }
@@ -128,6 +132,13 @@ extension ProductTableViewCell {
             make.height.equalTo(containerView.snp.height).priority(.high)
         }
     }
+    
+    @objc func addToBasket(){
+        print("сохраняем данные в Core Data")
+        if let product = product {
+           _ = storage?.addToBasket(product: product)
+        }
+    }
 
 }
 
@@ -143,8 +154,8 @@ struct ProductTableViewCellPreviews: PreviewProvider {
         func makeUIView(context: Context) -> UIView {
             let cell = ProductTableViewCell()
             // Создаём фиктивный продукт для обновления
-            let product = Product(name: "Гавайская", detail: "Тесто, Цыпленок, моцарелла, томатный соус", price: 469, image: "chicken", isPromo: false)
-            cell.update(product)
+            let product = Product(name: "Гавайская", detail: "Тесто, Цыпленок, моцарелла, томатный соус", price: 469, image: "chicken", isPromo: false, count: 1)
+            cell.update(product, storage: StorageService())
             return cell
         }
         

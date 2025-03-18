@@ -13,6 +13,7 @@ final class PromoTableViewCell: UITableViewCell {
     
     static let reuseId = "PromoCell"
     private var hasShadow = false
+    var storage: StorageService? = nil
     
     //MARK: - UI ELEMENTS
     
@@ -52,6 +53,7 @@ final class PromoTableViewCell: UITableViewCell {
         configuration.buttonSize = .medium
         configuration.title = "от 469 руб"
         $0.configuration = configuration
+        $0.addTarget(nil, action: #selector(goToBasket), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -91,11 +93,12 @@ final class PromoTableViewCell: UITableViewCell {
     
     //MARK: - FUNCTIONS
     
-    func update(_ product: Product) {
+    func update(_ product: Product, storage: StorageService) {
         nameLabel.text = product.name
         detailLabel.text = product.detail
         priceButton.setTitle("\(product.price) р", for: .normal)
         productImageView.image = UIImage(named: product.image)
+        self.storage = storage
     }
 }
 
@@ -143,6 +146,20 @@ extension PromoTableViewCell {
             make.width.equalTo(roundedView.snp.width).inset(PromoLayout.inset)
             make.height.equalTo(productImageView.snp.width)
         }
+    }
+    
+    
+    @objc func goToBasket(){
+        guard let products = storage?.getProductsToEntities() else { return }
+        print(products)
+        let basketVC = BasketViewController(product: products, promo: Moc.addProduct)
+            basketVC.modalPresentationStyle = .fullScreen
+            
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first,
+              let rootVC = window.rootViewController {
+               rootVC.present(basketVC, animated: true, completion: nil)
+           }
     }
     
 }

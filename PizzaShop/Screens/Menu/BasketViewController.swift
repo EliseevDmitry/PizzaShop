@@ -11,7 +11,7 @@ import SnapKit
 
 final class BasketViewController: UIViewController {
     
-    let products: [Product]
+    var products: [Product]
     let promo: [Product]
     
     init(product: [Product], promo: [Product]) {
@@ -270,6 +270,7 @@ final class BasketViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+        getAllPrice()
     }
     
     override func viewDidLayoutSubviews() {
@@ -279,7 +280,7 @@ final class BasketViewController: UIViewController {
             make.height.equalTo(
                 (
                     tableView.cellForRow(
-                        at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * 4
+                        at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * CGFloat(products.count)
             )
         }
     }
@@ -423,21 +424,28 @@ extension BasketViewController {
     
     //--------------------------------------
     @objc private func testBtn() {
-        let test = getAllPrice()
-        totalLabel.text = "\(test.0) товара на сумму \(test.1) \(Constants.rubleSymbol)"
+        
+            self.dismiss(animated: true, completion: nil)
+
     }
     
     //общее число продуктов
-    private func getAllPrice() -> (Int, Int) {
+    private func getAllPrice(){ //-> (Int, Int) {
         var countProducts = Int()
         var totalPrice = Int()
-        for item in (0...products.count - 1) {
-            let cell = tableView.cellForRow(at: IndexPath(row: item, section: 0)) as! BasketTableViewCell
-            let countProduct = cell.getValue()
-            countProducts += countProduct
-            totalPrice += (products[item].price * countProduct)
+        for index in (0...products.count - 1) {
+            //let cell = tableView.cellForRow(at: IndexPath(row: item, section: 0)) as! BasketTableViewCell
+            
+            //let countProduct = cell.getValue()
+            //countProducts += countProduct
+            //totalPrice += (products[item].price * countProduct)
+            
+            countProducts += products[index].count
+            totalPrice += products[index].count * products[index].price
         }
-        return (countProducts, totalPrice)
+        print(countProducts, totalPrice)
+        totalLabel.text = "\(countProducts) товара на \(totalPrice)" //\(Constants.rubleSymbol)
+        //return (countProducts, totalPrice)
     }
     
 }
@@ -451,6 +459,13 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueCell(indexPath) as BasketTableViewCell
         cell.update(products[indexPath.row])
         cell.selectionStyle = .none
+        
+        cell.onProductChanged = { product in
+            self.products[indexPath.row] = product
+            self.getAllPrice()
+            tableView.reloadData()
+            
+        }
         return cell
     }
 }

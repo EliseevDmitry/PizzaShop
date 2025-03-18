@@ -16,6 +16,7 @@ final class MenuScreenVC: UIViewController {
     }
 
     let productsLoader = ProductsLoader()
+    let storage = StorageService()
     
     var catProducts: [AllProducts] = [] {
         didSet {
@@ -51,6 +52,8 @@ final class MenuScreenVC: UIViewController {
         setupViews()
         setupConstraints()
         fetchProducts()
+        let remove = storage.removeAllEntities()
+        print(remove)
     }
 
     private func fetchProducts() {
@@ -91,11 +94,11 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
         if product.isPromo {
             indexCatArr.append(indexPath)
             let cell = tableView.dequeueCell(indexPath) as PromoTableViewCell
-            cell.update(product)
+            cell.update(product, storage: storage)
             return cell
         } else {
             let cell = tableView.dequeueCell(indexPath) as ProductTableViewCell
-            cell.update(product)
+            cell.update(product, storage: storage)
             return cell
         }
     }
