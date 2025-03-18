@@ -12,9 +12,11 @@ import SnapKit
 final class BasketViewController: UIViewController {
     
     let products: [Product]
+    let promo: [Product]
     
-    init(product: [Product]) {
+    init(product: [Product], promo: [Product]) {
         self.products = product
+        self.promo = promo
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,8 +39,9 @@ final class BasketViewController: UIViewController {
         return $0
     }(UIStackView())
     
+    //переделать sticky header
     private lazy var backgroundView: UIView = {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .black
         return $0
     }(UIView())
     
@@ -53,7 +56,7 @@ final class BasketViewController: UIViewController {
         return $0
     }(UILabel())
     
-    
+    //action - dismiss
     private lazy var closeButton: UIButton = {
         $0.setTitle("Закрыть", for: .normal)
         $0.setTitleColor(.orange, for: .normal)
@@ -63,8 +66,7 @@ final class BasketViewController: UIViewController {
     }(UIButton())
     
     private lazy var totalLabel: UILabel = {
-        let rubleSymbol = "\u{20BD}"
-        $0.text = "3 товара на 1398 \(rubleSymbol)"
+        $0.text = "3 товара на 1398 \(Constants.rubleSymbol)"
         $0.font = UIFont.boldSystemFont(ofSize: 26)
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
@@ -73,7 +75,6 @@ final class BasketViewController: UIViewController {
         $0.textColor = .white
         return $0
     }(UILabel())
-    
     
     private lazy var tableView: UITableView = {
         $0.dataSource = self
@@ -100,6 +101,7 @@ final class BasketViewController: UIViewController {
         return $0
     }(UILabel())
     
+    //CollectionView
     private let layout: UICollectionViewFlowLayout = {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 10
@@ -107,7 +109,7 @@ final class BasketViewController: UIViewController {
     }(UICollectionViewFlowLayout())
     
     private lazy var addToProductsCV: UICollectionView = {
-        $0.backgroundColor = .black
+        $0.backgroundColor = .clear
         $0.delegate = self
         $0.dataSource = self
         $0.showsHorizontalScrollIndicator = false
@@ -149,7 +151,7 @@ final class BasketViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.textColor = .white
         return $0
@@ -160,7 +162,7 @@ final class BasketViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.textColor = .white
         return $0
@@ -180,7 +182,7 @@ final class BasketViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.textColor = .white
         return $0
@@ -191,7 +193,7 @@ final class BasketViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.textColor = .white
         return $0
@@ -211,12 +213,11 @@ final class BasketViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.textColor = .white
         return $0
     }(UILabel())
-    //info.circle.fill
     
     private lazy var infoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -230,24 +231,23 @@ final class BasketViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private lazy var deliveryStatusLabel: UILabel = {
+        $0.text = "Бесплатно"
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
+        $0.numberOfLines = 1
+        $0.textAlignment = .center
+        $0.textColor = .white
+        return $0
+    }(UILabel())
+    
     private lazy var deliveryTextBtnView: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 4
         $0.alignment = .center
         return $0
     }(UIStackView())
-    
-    
-    private lazy var deliveryStatusLabel: UILabel = {
-        $0.text = "Бесплатно"
-        $0.font = UIFont.boldSystemFont(ofSize: 16)
-        $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
-        $0.textAlignment = .center
-        $0.textColor = .white
-        return $0
-    }(UILabel())
     
     private lazy var deliveryBackground: UIView = {
         $0.backgroundColor = .darkGray
@@ -260,35 +260,29 @@ final class BasketViewController: UIViewController {
         configuration.baseForegroundColor = UIColor.white
         configuration.cornerStyle = .capsule
         configuration.buttonSize = .large
-        let rubleSymbol = "\u{20BD}"
-        configuration.title = "Оформить заказ на 799 \(rubleSymbol)"
+        configuration.title = "Оформить заказ на 799 \(Constants.rubleSymbol)"
         $0.configuration = configuration
         $0.addTarget(self, action: #selector(checkoutTapped), for: .touchUpInside)
         return $0
     }(UIButton())
     
-    private lazy var emptyView: UIView = {
-        $0.backgroundColor = .clear
-        return $0
-    }(UIView())
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
         setupViews()
         setupConstraints()
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         // Обновляем высоту таблицы после того, как содержимое будет готово
         tableView.snp.updateConstraints { make in
-            make.height.equalTo((tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * 4)
+            make.height.equalTo(
+                (
+                    tableView.cellForRow(
+                        at: IndexPath(item: 0, section: 0))?.frame.height ?? 100) * 4
+            )
         }
-        
-       
     }
-    
     
 }
 
@@ -306,15 +300,13 @@ extension BasketViewController {
             backgroundView.addSubview($0)
         }
         
-        
         [totalLabel, tableView, addToProductsLabel, addToProductsCV, spacerOne, promocodeButton, spacerTwo, stackTotalView, stackDodoView, deliveryDodoStack, deliveryBackground].forEach {
             verticalStackView.addArrangedSubview($0)
-        } //emptyView
+        }
         
         [oderButton].forEach {
             deliveryBackground.addSubview($0)
         }
-        
         
         [itemsLabel, totalCostLabel].forEach {
             stackTotalView.addArrangedSubview($0)
@@ -331,13 +323,12 @@ extension BasketViewController {
         [deliveryLabel, infoButton].forEach {
             deliveryTextBtnView.addArrangedSubview($0)
         }
-
+        
     }
     
     private func setupConstraints(){
         
         let safeArea = view.safeAreaLayoutGuide
-        
         backgroundView.snp.makeConstraints { make in
             make.top.left.right.equalTo(safeArea)
             make.height.equalTo(50)
@@ -373,7 +364,7 @@ extension BasketViewController {
         }
         
         addToProductsCV.snp.makeConstraints { make in
-           make.height.equalTo(220)
+            make.height.equalTo(220)
             make.left.right.equalTo(verticalStackView)
         }
         
@@ -408,7 +399,6 @@ extension BasketViewController {
         }
         
         oderButton.snp.makeConstraints { make in
-           // make.centerX.equalTo(deliveryBackground)
             make.left.right.equalTo(deliveryBackground).inset(40)
             make.top.bottom.equalTo(deliveryBackground).inset(10)
         }
@@ -416,7 +406,7 @@ extension BasketViewController {
         addToProductsLabel.snp.makeConstraints { make in
             make.height.equalTo(75)
         }
- 
+        
     }
     
     @objc private func applyPromoTapped(){
@@ -430,23 +420,24 @@ extension BasketViewController {
     @objc private func checkoutTapped() {
         print("Нажата кнопка оформления заказа!")
     }
+    
     //--------------------------------------
     @objc private func testBtn() {
         let test = getAllPrice()
-        let rubleSymbol = "\u{20BD}"
-        totalLabel.text = "\(test.0) товара на сумму \(test.1) \(rubleSymbol)"
+        totalLabel.text = "\(test.0) товара на сумму \(test.1) \(Constants.rubleSymbol)"
     }
+    
     //общее число продуктов
     private func getAllPrice() -> (Int, Int) {
         var countProducts = Int()
-        var totalPrise = Int()
+        var totalPrice = Int()
         for item in (0...products.count - 1) {
-            let cell =  tableView.cellForRow(at: IndexPath(row: item, section: 0)) as! BasketTableViewCell
+            let cell = tableView.cellForRow(at: IndexPath(row: item, section: 0)) as! BasketTableViewCell
             let countProduct = cell.getValue()
             countProducts += countProduct
-            totalPrise += (products[item].price * countProduct)
+            totalPrice += (products[item].price * countProduct)
         }
-        return (countProducts, totalPrise)
+        return (countProducts, totalPrice)
     }
     
 }
@@ -459,18 +450,15 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(indexPath) as BasketTableViewCell
         cell.update(products[indexPath.row])
-        cell.selectionStyle = .none //отключает нажатие на ячейку
+        cell.selectionStyle = .none
         return cell
     }
-
 }
 
 extension BasketViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Получаем высоту коллекции, чтобы задать её в itemSize
-        let height = collectionView.bounds.height // высота коллекции
-        let width = 130.0 // или вычислите ширину в зависимости от ваших требований
-
+        let height = collectionView.bounds.height
+        let width = Screen.width/3
         return CGSize(width: width, height: height)
     }
 }
@@ -481,18 +469,15 @@ extension BasketViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(collectionView)
-        print(indexPath)
         let cell = collectionView.dequeueCell(indexPath) as AddToProductCell
         cell.updateData(item: Addons(name: "Тест", price: 150, image: "mozzarella"))
         return cell
     }
- 
 }
 
 struct BasketPreview: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> BasketViewController {
-        return BasketViewController(product: Test.product)
+        return BasketViewController(product: Test.product, promo: [])
     }
     
     func updateUIViewController(_ uiViewController: BasketViewController, context: Context) {}

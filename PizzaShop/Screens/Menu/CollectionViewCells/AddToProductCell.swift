@@ -30,11 +30,22 @@ class AddToProductCell: UICollectionViewCell {
     
     private lazy var nameLabel: UILabel = {
         $0.text = "Сыры чеддер и пармезан"
-        $0.font = UIFont.systemFont(ofSize: 15)
+        $0.font = UIFont.boldSystemFont(ofSize: 20)
         $0.textColor = .white
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
-        $0.numberOfLines = 2
+        $0.numberOfLines = 4
+        $0.textAlignment = .left
+        return $0
+    }(UILabel())
+    
+    private lazy var propertiesLabel: UILabel = {
+        $0.text = "100 г"
+        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.textColor = .lightGray
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
+        $0.numberOfLines = 4
         $0.textAlignment = .left
         return $0
     }(UILabel())
@@ -78,7 +89,7 @@ class AddToProductCell: UICollectionViewCell {
 extension AddToProductCell {
     
     private func setupViews(){
-        [containerView, addonsProductImageView, nameLabel, priceButton].forEach {
+        [containerView, addonsProductImageView, nameLabel, propertiesLabel, priceButton].forEach {
             contentView.addSubview($0)
         }
     }
@@ -96,13 +107,19 @@ extension AddToProductCell {
             
         }
         nameLabel.snp.makeConstraints { make in
-           
+            make.top.equalTo(addonsProductImageView.snp.bottom).offset(10)
+            make.centerX.equalTo(containerView.snp.centerX)
+            make.left.right.equalTo(containerView).inset(5)
+        }
+        
+        propertiesLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(10)
             make.centerX.equalTo(containerView.snp.centerX)
             make.left.right.equalTo(containerView).inset(5)
         }
         
         priceButton.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+           // make.top.equalTo(nameLabel.snp.bottom).offset(10)
             make.centerX.equalTo(containerView.snp.centerX)
             make.left.right.equalTo(containerView).inset(10)
             make.bottom.equalTo(contentView.snp.bottom).inset(10)

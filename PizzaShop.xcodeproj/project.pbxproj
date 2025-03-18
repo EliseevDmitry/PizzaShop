@@ -12,6 +12,7 @@
 		2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE1E2CEA6C2400E06092 /* AppDelegate.swift */; };
 		2607BE212CEA6C2400E06092 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE202CEA6C2400E06092 /* SceneDelegate.swift */; };
 		2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */; };
+		260BDD7C2D8922F2007B14A0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260BDD7B2D8922F2007B14A0 /* Constants.swift */; };
 		26244C2D2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26244C2C2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift */; };
 		263D2B082CEB025100F7E540 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2B072CEB025100F7E540 /* ProductTableViewCell.swift */; };
 		2663656F2CFF1687007C2D80 /* TopMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663656E2CFF1687007C2D80 /* TopMenuTableViewCell.swift */; };
@@ -46,6 +47,7 @@
 		2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScreenVC.swift; sourceTree = "<group>"; };
 		2607BE272CEA6C2500E06092 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2607BE2A2CEA6C2500E06092 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		260BDD7B2D8922F2007B14A0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		26244C2C2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+dequeue.swift"; sourceTree = "<group>"; };
 		263D2B072CEB025100F7E540 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		2663656E2CFF1687007C2D80 /* TopMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				26E146C32CF86EE100243B62 /* Screen.swift */,
+				260BDD7B2D8922F2007B14A0 /* Constants.swift */,
 				2607BE272CEA6C2500E06092 /* Assets.xcassets */,
 				26F000CA2CEB1ADD004EDC37 /* Info.plist */,
 				2607BE292CEA6C2500E06092 /* LaunchScreen.storyboard */,
@@ -308,6 +311,7 @@
 				26DEC3142D09947D00E91961 /* ProductsLoader.swift in Sources */,
 				263D2B082CEB025100F7E540 /* ProductTableViewCell.swift in Sources */,
 				26244C2D2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift in Sources */,
+				260BDD7C2D8922F2007B14A0 /* Constants.swift in Sources */,
 				26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */,
 				26E146BC2CF868EE00243B62 /* UIView+applyShadow.swift in Sources */,
 				26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */,
