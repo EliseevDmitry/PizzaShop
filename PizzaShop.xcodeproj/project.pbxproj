@@ -18,6 +18,7 @@
 		2663656F2CFF1687007C2D80 /* TopMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663656E2CFF1687007C2D80 /* TopMenuTableViewCell.swift */; };
 		266365722CFF209D007C2D80 /* PizzaCellCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266365712CFF209D007C2D80 /* PizzaCellCollectionView.swift */; };
 		266365742CFF53FB007C2D80 /* UICollectionView+dequeue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */; };
+		26ABA7C22D9BE9F200494B3D /* DeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABA7C12D9BE9F200494B3D /* DeliveryViewController.swift */; };
 		26B8964A2D101715007DAEE7 /* UIView+applyCustomShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B896492D101715007DAEE7 /* UIView+applyCustomShadow.swift */; };
 		26B8964C2D11F143007DAEE7 /* MenuCellCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B8964B2D11F143007DAEE7 /* MenuCellCollectionView.swift */; };
 		26BB5C562D4E60A100B67BA7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BB5C552D4E60A100B67BA7 /* DetailViewController.swift */; };
@@ -39,6 +40,8 @@
 		26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */; };
 		26F000D32CEB6641004EDC37 /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
 		26F000D72CEB6831004EDC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2607BE272CEA6C2500E06092 /* Assets.xcassets */; };
+		26F7F6EB2DC087A800E2736A /* DaDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F7F6EA2DC087A800E2736A /* DaDataLoader.swift */; };
+		26F7F6ED2DC0893500E2736A /* DaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F7F6EC2DC0893200E2736A /* DaData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,7 @@
 		2663656E2CFF1687007C2D80 /* TopMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuTableViewCell.swift; sourceTree = "<group>"; };
 		266365712CFF209D007C2D80 /* PizzaCellCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaCellCollectionView.swift; sourceTree = "<group>"; };
 		266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+dequeue.swift"; sourceTree = "<group>"; };
+		26ABA7C12D9BE9F200494B3D /* DeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryViewController.swift; sourceTree = "<group>"; };
 		26B896492D101715007DAEE7 /* UIView+applyCustomShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+applyCustomShadow.swift"; sourceTree = "<group>"; };
 		26B8964B2D11F143007DAEE7 /* MenuCellCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellCollectionView.swift; sourceTree = "<group>"; };
 		26BB5C552D4E60A100B67BA7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 		26F000CA2CEB1ADD004EDC37 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26F000CD2CEB1FA7004EDC37 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		26F000CF2CEB1FC6004EDC37 /* ProductsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsServices.swift; sourceTree = "<group>"; };
+		26F7F6EA2DC087A800E2736A /* DaDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaDataLoader.swift; sourceTree = "<group>"; };
+		26F7F6EC2DC0893200E2736A /* DaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +162,7 @@
 				2607BE222CEA6C2400E06092 /* MenuScreenVC.swift */,
 				26BB5C552D4E60A100B67BA7 /* DetailViewController.swift */,
 				26EBD6BD2D85AC2700C57C57 /* BasketViewController.swift */,
+				26ABA7C12D9BE9F200494B3D /* DeliveryViewController.swift */,
 				263D2B062CEB022200F7E540 /* TableViewCells */,
 				26C66B7B2D12847D00BF611C /* CollectionView */,
 				266365702CFF2044007C2D80 /* CollectionViewCells */,
@@ -233,6 +240,7 @@
 		26F000CB2CEB1F50004EDC37 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				26F7F6EC2DC0893200E2736A /* DaData.swift */,
 				26F000CD2CEB1FA7004EDC37 /* Product.swift */,
 			);
 			path = Models;
@@ -245,6 +253,7 @@
 				26DEC3132D09947D00E91961 /* ProductsLoader.swift */,
 				26C8DB682D89ABE200D9DAE1 /* StorageService.swift */,
 				26C8DB6A2D89AC5400D9DAE1 /* Product.xcdatamodeld */,
+				26F7F6EA2DC087A800E2736A /* DaDataLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -323,6 +332,7 @@
 			files = (
 				2607BE232CEA6C2400E06092 /* MenuScreenVC.swift in Sources */,
 				2600C1712D8715DA00AB9DBB /* BasketTableViewCell.swift in Sources */,
+				26ABA7C22D9BE9F200494B3D /* DeliveryViewController.swift in Sources */,
 				2663656F2CFF1687007C2D80 /* TopMenuTableViewCell.swift in Sources */,
 				26C66B7D2D1284C700BF611C /* MenuCollectionView.swift in Sources */,
 				26DEC3142D09947D00E91961 /* ProductsLoader.swift in Sources */,
@@ -335,8 +345,10 @@
 				26E146C42CF86EE700243B62 /* Screen.swift in Sources */,
 				2600C16F2D86D2A300AB9DBB /* AddToProductCell.swift in Sources */,
 				26C8DB692D89ABE200D9DAE1 /* StorageService.swift in Sources */,
+				26F7F6EB2DC087A800E2736A /* DaDataLoader.swift in Sources */,
 				26B8964C2D11F143007DAEE7 /* MenuCellCollectionView.swift in Sources */,
 				266365722CFF209D007C2D80 /* PizzaCellCollectionView.swift in Sources */,
+				26F7F6ED2DC0893500E2736A /* DaData.swift in Sources */,
 				2607BE1F2CEA6C2400E06092 /* AppDelegate.swift in Sources */,
 				26DC7D952D87D8DE00462D44 /* CustomStepper.swift in Sources */,
 				26B8964A2D101715007DAEE7 /* UIView+applyCustomShadow.swift in Sources */,
