@@ -18,6 +18,8 @@
 		2663656F2CFF1687007C2D80 /* TopMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663656E2CFF1687007C2D80 /* TopMenuTableViewCell.swift */; };
 		266365722CFF209D007C2D80 /* PizzaCellCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266365712CFF209D007C2D80 /* PizzaCellCollectionView.swift */; };
 		266365742CFF53FB007C2D80 /* UICollectionView+dequeue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */; };
+		26A9DDB32DC2423B008870A8 /* AddessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9DDB22DC2423B008870A8 /* AddessView.swift */; };
+		26A9DDB52DC248BB008870A8 /* FixedHeightTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9DDB42DC248BB008870A8 /* FixedHeightTextField.swift */; };
 		26ABA7C22D9BE9F200494B3D /* DeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABA7C12D9BE9F200494B3D /* DeliveryViewController.swift */; };
 		26B8964A2D101715007DAEE7 /* UIView+applyCustomShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B896492D101715007DAEE7 /* UIView+applyCustomShadow.swift */; };
 		26B8964C2D11F143007DAEE7 /* MenuCellCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B8964B2D11F143007DAEE7 /* MenuCellCollectionView.swift */; };
@@ -59,6 +61,8 @@
 		2663656E2CFF1687007C2D80 /* TopMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuTableViewCell.swift; sourceTree = "<group>"; };
 		266365712CFF209D007C2D80 /* PizzaCellCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaCellCollectionView.swift; sourceTree = "<group>"; };
 		266365732CFF53FB007C2D80 /* UICollectionView+dequeue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+dequeue.swift"; sourceTree = "<group>"; };
+		26A9DDB22DC2423B008870A8 /* AddessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddessView.swift; sourceTree = "<group>"; };
+		26A9DDB42DC248BB008870A8 /* FixedHeightTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedHeightTextField.swift; sourceTree = "<group>"; };
 		26ABA7C12D9BE9F200494B3D /* DeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryViewController.swift; sourceTree = "<group>"; };
 		26B896492D101715007DAEE7 /* UIView+applyCustomShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+applyCustomShadow.swift"; sourceTree = "<group>"; };
 		26B8964B2D11F143007DAEE7 /* MenuCellCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellCollectionView.swift; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				26DC7D942D87D8DE00462D44 /* CustomStepper.swift */,
+				26A9DDB22DC2423B008870A8 /* AddessView.swift */,
+				26A9DDB42DC248BB008870A8 /* FixedHeightTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 				26244C2D2CEB9CCF00F3FBB8 /* UITableView+dequeue.swift in Sources */,
 				260BDD7C2D8922F2007B14A0 /* Constants.swift in Sources */,
 				26F000CE2CEB1FA7004EDC37 /* Product.swift in Sources */,
+				26A9DDB52DC248BB008870A8 /* FixedHeightTextField.swift in Sources */,
 				26E146BC2CF868EE00243B62 /* UIView+applyShadow.swift in Sources */,
 				26F000D02CEB1FC6004EDC37 /* ProductsServices.swift in Sources */,
 				26E146C42CF86EE700243B62 /* Screen.swift in Sources */,
@@ -354,6 +361,7 @@
 				26B8964A2D101715007DAEE7 /* UIView+applyCustomShadow.swift in Sources */,
 				26C8DB652D89904700D9DAE1 /* Moc.swift in Sources */,
 				26C9F84B2D59C8A900B156A8 /* DetailCollectionViewCell.swift in Sources */,
+				26A9DDB32DC2423B008870A8 /* AddessView.swift in Sources */,
 				26DF71832D5922640012161C /* ImageCellCollectionView.swift in Sources */,
 				266365742CFF53FB007C2D80 /* UICollectionView+dequeue.swift in Sources */,
 				26DF71812D58FD9D0012161C /* AddonsProductCollectionViewCell.swift in Sources */,
