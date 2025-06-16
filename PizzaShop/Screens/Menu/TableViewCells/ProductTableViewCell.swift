@@ -11,8 +11,10 @@ import SwiftUI
 final class ProductTableViewCell: UITableViewCell {
     
     static let reuseId = "ProductCell"
-    var storage: StorageService? = nil
-    var product: Product? = nil
+    //var storage: StorageService? = nil
+    var product: Product?
+    
+    var onProductTap: ((Product)->())?
 
     private lazy var containerView: UIView = {
         $0.backgroundColor = .white
@@ -76,12 +78,12 @@ final class ProductTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(_ product: Product, storage: StorageService) {
+    func update(_ product: Product) {
         nameLabel.text = product.name
         detailLabel.text = product.detail
         priceButton.setTitle("\(product.price) р", for: .normal)
         productImageView.image = UIImage(named: product.image)
-        self.storage = storage
+        //self.storage = storage
         self.product = product
     }
     
@@ -136,11 +138,14 @@ extension ProductTableViewCell {
     @objc func addToBasket(){
         print("сохраняем данные в Core Data")
         if let product = product {
-           _ = storage?.addToBasket(product: product)
+            onProductTap?(product)
+           //_ = storage?.addToBasket(product: product)
         }
     }
 
 }
+
+
 
 
 //MARK: - PREVIEW
@@ -155,7 +160,7 @@ struct ProductTableViewCellPreviews: PreviewProvider {
             let cell = ProductTableViewCell()
             // Создаём фиктивный продукт для обновления
             let product = Product(name: "Гавайская", detail: "Тесто, Цыпленок, моцарелла, томатный соус", price: 469, image: "chicken", isPromo: false, count: 1)
-            cell.update(product, storage: StorageService())
+            cell.update(product)
             return cell
         }
         

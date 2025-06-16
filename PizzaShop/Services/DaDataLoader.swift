@@ -10,6 +10,7 @@ import CoreLocation
 
 protocol IDaDataLoader {
     init(coordinate: CLLocationCoordinate2D)
+    func getAddress(coordinate: CLLocationCoordinate2D) -> String
 }
 
 final class DaDataLoader: IDaDataLoader {

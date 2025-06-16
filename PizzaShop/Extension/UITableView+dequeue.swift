@@ -12,14 +12,11 @@ protocol Reusable {}
 
 extension UITableViewCell: Reusable {}
 
-
-//ТУТ еще поразбираться!!!
 extension Reusable where Self: UITableViewCell {
     static var reuseID: String {
         return String.init(describing: self)
     }
 }
-
 
 //Добавим расширение для регистрации и генерации ячейки
 extension UITableView {
@@ -33,6 +30,3 @@ extension UITableView {
         return cell
     }
 }
-
-
-

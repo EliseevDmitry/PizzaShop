@@ -16,15 +16,15 @@ class DetailViewController: UIViewController  {
     
     init(detail: String) {
         self.detail = detail
-        print(detail)
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //MARK: - LAZY VAR
     
+    
+    //MARK: - LAZY VAR
     private lazy var addonsProductCollectionView: UICollectionView = {
         $0.delegate = self
         $0.dataSource = self
@@ -200,7 +200,7 @@ extension DetailViewController: UICollectionViewDelegate , UICollectionViewDataS
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3 //пока статика
+       return 3 //пока статика
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

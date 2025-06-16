@@ -9,14 +9,19 @@ import UIKit
 import SwiftUI
 
 final class MenuScreenVC: UIViewController {
-    
-    func selectItem(index: Int) {
-        let indexPath = IndexPath(row: 0, section: index)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-    }
 
-    let productsLoader = ProductsLoader()
-    let storage = StorageService()
+    let productsLoader: IProductsLoader
+    let cartStorage: IStorageService
+    
+    init(productsLoader: IProductsLoader, cartStorage: IStorageService) {
+        self.productsLoader = productsLoader
+        self.cartStorage = cartStorage
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     var catProducts: [AllProducts] = [] {
         didSet {
@@ -52,7 +57,7 @@ final class MenuScreenVC: UIViewController {
         setupViews()
         setupConstraints()
         fetchProducts()
-        let remove = storage.removeAllEntities()
+        let remove = cartStorage.removeAllEntities()
         print(remove)
     }
 
@@ -60,6 +65,11 @@ final class MenuScreenVC: UIViewController {
         productsLoader.loadProducts() { [weak self] item in
             self?.catProducts = item
         }
+    }
+    
+    func selectItem(index: Int) {
+        let indexPath = IndexPath(row: 0, section: index)
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
 }
@@ -94,11 +104,17 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
         if product.isPromo {
             indexCatArr.append(indexPath)
             let cell = tableView.dequeueCell(indexPath) as PromoTableViewCell
-            cell.update(product, storage: storage)
+            cell.update(product)
             return cell
         } else {
             let cell = tableView.dequeueCell(indexPath) as ProductTableViewCell
-            cell.update(product, storage: storage)
+            cell.update(product)
+            
+            cell.onProductTap = { product in
+                print(product)
+                self.productCellPriceTap(product)
+            }
+            
             return cell
         }
     }
@@ -149,18 +165,31 @@ extension MenuScreenVC: UITableViewDataSource, UITableViewDelegate {
  
 }
 
+//MARK: Event Handler
+extension MenuScreenVC {
+    
+    func productCellPriceTap(_ product: Product) {
+        
+        cartStorage.addProduct(product: product)
+    }
+}
+
 //MARK: - Preview
 
-struct MenuScreenVCPreviews: PreviewProvider {
+//struct MenuScreenVCPreviews: PreviewProvider {
+//    
+//    struct MenuScreenVCContainer: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            UINavigationController(rootViewController:  MenuScreenVC(coder: <#NSCoder#>))
+//        }
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
+//    }
+//    
+//    static var previews: some View {
+//        MenuScreenVCContainer().ignoresSafeArea()
+//    }
+//}
+
+extension MenuScreenVC {
     
-    struct MenuScreenVCContainer: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController:  MenuScreenVC())
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
-    }
-    
-    static var previews: some View {
-        MenuScreenVCContainer().ignoresSafeArea()
-    }
 }

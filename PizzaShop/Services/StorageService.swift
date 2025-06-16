@@ -8,9 +8,20 @@
 import Foundation
 import CoreData
 
-final class StorageService {
-    var savedProducts: [ProductEntities] = []
-    let container: NSPersistentContainer
+protocol IStorageService {
+    func addProduct(product: Product) -> Bool
+    func deleteProduct(indexSet: IndexSet) -> Bool
+    func updateProduct(entity: ProductEntities, product: Product) -> Bool
+    func removeAllEntities() -> Bool
+    func getProductsToEntities() -> [Product]
+    func getEntitiByProductName(name: String) -> ProductEntities?
+    func addToBasket(product: Product) -> Bool
+}
+
+
+final class StorageService: IStorageService {
+    private var savedProducts: [ProductEntities] = []
+    private let container: NSPersistentContainer
     
     init(){
         container = NSPersistentContainer(name: "Product")
@@ -27,6 +38,7 @@ final class StorageService {
 
 extension StorageService {
     
+    @discardableResult
     func addProduct(product: Product) -> Bool {
         let newProduct = ProductEntities(context: container.viewContext)
         newProduct.name = product.name

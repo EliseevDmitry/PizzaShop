@@ -10,16 +10,12 @@ import UIKit
 extension UICollectionViewCell: Reusable {}
 
 extension Reusable where Self: UICollectionViewCell {
-    
     static var reuseID: String {
         return String.init(describing: self)
     }
-    
 }
 
-//Добавим расширение для регистрации и генерации ячейки
 extension UICollectionView {
-    
     func registerCell<Cell: UICollectionViewCell>(_ cellClass: Cell.Type) {
         register(cellClass, forCellWithReuseIdentifier: cellClass.reuseID)
     }
@@ -29,5 +25,4 @@ extension UICollectionView {
         else { fatalError("Fatal error for cell at \(indexPath)") }
         return cell
     }
-    
 }

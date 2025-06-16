@@ -8,36 +8,36 @@
 import Foundation
 
 struct Moc {
-        static let product: [Product] = [
-            Product(
-                name: "Ципленок табака",
-                detail: "Помидоры, шпинат, сыр",
-                price: 234,
-                image: "chicken",
-                isPromo: false,
-                count: 1),
-            Product(
-                name: "Дьявольская",
-                detail: "Помидоры, шпинат, сыр, ветчина",
-                price: 234,
-                image: "diablo",
-                isPromo: false,
-                count: 1),
-            Product(
-                name: "Ципленок табака",
-                detail: "Помидоры, шпинат, сыр",
-                price: 576,
-                image: "chicken",
-                isPromo: false,
-                count: 1),
-            Product(
-                name: "Пеперони",
-                detail: "Помидоры, шпинат, сыр, колбаски",
-                price: 100,
-                image: "grilled",
-                isPromo: false,
-                count: 1),
-        ]
+    static let product: [Product] = [
+        Product(
+            name: "Ципленок табака",
+            detail: "Помидоры, шпинат, сыр",
+            price: 234,
+            image: "chicken",
+            isPromo: false,
+            count: 1),
+        Product(
+            name: "Дьявольская",
+            detail: "Помидоры, шпинат, сыр, ветчина",
+            price: 234,
+            image: "diablo",
+            isPromo: false,
+            count: 1),
+        Product(
+            name: "Ципленок табака",
+            detail: "Помидоры, шпинат, сыр",
+            price: 576,
+            image: "chicken",
+            isPromo: false,
+            count: 1),
+        Product(
+            name: "Пеперони",
+            detail: "Помидоры, шпинат, сыр, колбаски",
+            price: 100,
+            image: "grilled",
+            isPromo: false,
+            count: 1),
+    ]
     
     static let addProduct: [Product] = [
         Product(

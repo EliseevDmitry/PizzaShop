@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+//MARK: Question - какая хорошая практика убирать magicNumbers?
 extension UIView {
     
     enum ShadowGeometry: CGFloat {

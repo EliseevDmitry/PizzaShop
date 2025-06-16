@@ -9,7 +9,7 @@ import Foundation
 
 // I - интерфейс "логика найминга"
 protocol IProductsLoader {
-    init(urlSession: URLSession, decoder: JSONDecoder)
+    func loadProducts(completion: @escaping ([AllProducts])->())
 }
 
 struct ProductsLoader: IProductsLoader {

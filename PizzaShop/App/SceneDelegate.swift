@@ -7,6 +7,8 @@
 
 import UIKit
 
+var di = Di()
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
@@ -19,7 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow.init(windowScene: scene)
-        window?.rootViewController = DeliveryViewController()//MenuScreenVC()//BasketViewController(product: Moc.product, promo: Moc.addProduct)//MenuScreenVC()//DetailViewController()//MenuScreenVC() //
+        //window?.rootViewController = DeliveryViewController()//MenuScreenVC()//BasketViewController(product: Moc.product, promo: Moc.addProduct)//MenuScreenVC()//DetailViewController()//MenuScreenVC() //
+        
+        window?.rootViewController = di.screenFactory.makeMenuScreen()
+        
         window?.makeKeyAndVisible()
     }
 

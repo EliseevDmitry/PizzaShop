@@ -13,7 +13,11 @@ final class PromoTableViewCell: UITableViewCell {
     
     static let reuseId = "PromoCell"
     private var hasShadow = false
-    var storage: StorageService? = nil
+    //var storage: StorageService? = nil
+    
+    private var product: Product?
+    
+    var onProductButtonTap: ((Product)->())?
     
     //MARK: - UI ELEMENTS
     
@@ -53,7 +57,7 @@ final class PromoTableViewCell: UITableViewCell {
         configuration.buttonSize = .medium
         configuration.title = "от 469 руб"
         $0.configuration = configuration
-        $0.addTarget(nil, action: #selector(goToBasket), for: .touchUpInside)
+        $0.addTarget(nil, action: #selector(priceButtonTap), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -93,12 +97,13 @@ final class PromoTableViewCell: UITableViewCell {
     
     //MARK: - FUNCTIONS
     
-    func update(_ product: Product, storage: StorageService) {
+    func update(_ product: Product) {
+        self.product = product
         nameLabel.text = product.name
         detailLabel.text = product.detail
         priceButton.setTitle("\(product.price) р", for: .normal)
         productImageView.image = UIImage(named: product.image)
-        self.storage = storage
+        //self.storage = storage
     }
 }
 
@@ -148,19 +153,26 @@ extension PromoTableViewCell {
         }
     }
     
-    
-    @objc func goToBasket(){
-        guard let products = storage?.getProductsToEntities() else { return }
-        print(products)
-        let basketVC = BasketViewController(product: products, promo: Moc.addProduct)
-            basketVC.modalPresentationStyle = .fullScreen
-            
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = scene.windows.first,
-              let rootVC = window.rootViewController {
-               rootVC.present(basketVC, animated: true, completion: nil)
-           }
+    @objc func priceButtonTap() {
+        
+        guard let product else { return }
+        
+        onProductButtonTap?(product)
+        
     }
+    
+//    @objc func goToBasket(){
+//        guard let products = storage?.getProductsToEntities() else { return }
+//        print(products)
+//        let basketVC = BasketViewController(product: products, promo: Moc.addProduct)
+//            basketVC.modalPresentationStyle = .fullScreen
+//            
+//        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//              let window = scene.windows.first,
+//              let rootVC = window.rootViewController {
+//               rootVC.present(basketVC, animated: true, completion: nil)
+//           }
+//    }
     
 }
 
